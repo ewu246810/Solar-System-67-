@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,24 @@ SECRET_KEY = 'django-insecure-s6!j@-6!uu_yq3g_6*by!ac22n)&07zlmfdmc0)@_g+72qbghb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'solar-system-67.vercel.app']
+
+# Vercel provides an exact hostname for each deployment. Add those exact
+# domains so preview deployments work without trusting every *.vercel.app site.
+vercel_hosts = []
+for host_variable in (
+    'VERCEL_URL',
+    'VERCEL_BRANCH_URL',
+    'VERCEL_PROJECT_PRODUCTION_URL',
+):
+    host = os.environ.get(host_variable, '').strip()
+    host = host.removeprefix('https://').removeprefix('http://').split('/', 1)[0]
+    if host and host not in vercel_hosts:
+        vercel_hosts.append(host)
+
+ALLOWED_HOSTS.extend(host for host in vercel_hosts if host not in ALLOWED_HOSTS)
+CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in vercel_hosts]
+CSRF_TRUSTED_ORIGINS.append('https://solar-system-67.vercel.app')
 
 
 # Application definition
