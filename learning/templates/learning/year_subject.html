@@ -1,0 +1,78 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Year {{ year }} {{ subject.name }} — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+  <script src="{% static 'learning/quiz.js' %}" defer></script>
+</head>
+<body class="resource-page resource-page--{{ subject.tone }}">
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="resource-main">
+    <nav class="resource-breadcrumbs" aria-label="Breadcrumb">
+      <a href="{% url 'home' %}">Study Hub</a><span aria-hidden="true">/</span>
+      <a href="{% url 'learning_library' %}">Years 1–12</a><span aria-hidden="true">/</span>
+      <a href="{% url 'year_dashboard' year %}">Year {{ year }}</a>
+    </nav>
+
+    <section class="resource-hero">
+      <div class="resource-subject-icon resource-subject-icon--{{ subject.tone }}" aria-hidden="true">{{ subject.icon }}</div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> {{ band|upper }} · YEAR {{ year }} {{ subject.name|upper }}</p>
+      <h1>{{ resource.topic }}</h1>
+      <p>Take a few minutes to read, review the notes, and try the mini test. You can check your answers straight away.</p>
+    </section>
+
+    <nav class="resource-jump" aria-label="On this page">
+      <a href="#notes">Notes</a><a href="#article">Short article</a><a href="#mini-test">Mini test <span>3 questions</span></a>
+    </nav>
+
+    <section class="resource-section" id="notes" aria-labelledby="notes-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> KEEP THESE IN MIND</p><h2 id="notes-title">Quick notes</h2></div>
+      <div class="note-grid">
+        {% for note in resource.notes %}
+          <article class="note-card"><span class="note-card-number">{{ forloop.counter|stringformat:"02d" }}</span><p>{{ note }}</p></article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <article class="article-section" id="article" aria-labelledby="article-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> A SHORT READ</p><h2 id="article-title">A little more about it</h2></div>
+      <div class="article-card"><span class="article-kicker">YEAR {{ year }} / {{ subject.name|upper }}</span><p>{{ resource.article }}</p></div>
+    </article>
+
+    <section class="resource-section quiz-section" id="mini-test" aria-labelledby="quiz-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> HAVE A GO</p><h2 id="quiz-title">Mini test</h2><p>Choose one answer for each question, then check your score.</p></div>
+      <form class="quiz-form" novalidate>
+        {% for question in resource.questions %}
+          <fieldset class="quiz-question" data-answer="{{ question.answer }}" data-explanation="{{ question.explanation }}">
+            <legend><span class="quiz-question-number">QUESTION {{ forloop.counter|stringformat:"02d" }}</span>{{ question.prompt }}</legend>
+            <div class="quiz-options">
+              {% for option in question.options %}
+                <label class="quiz-choice"><input type="radio" name="question-{{ forloop.parentloop.counter0 }}" value="{{ forloop.counter0 }}"><span>{{ option }}</span></label>
+              {% endfor %}
+            </div>
+            <p class="question-feedback" aria-live="polite"></p>
+          </fieldset>
+        {% endfor %}
+        <div class="quiz-actions"><button class="quiz-submit" type="submit">Check my answers <span aria-hidden="true">↗</span></button><button class="quiz-reset" type="reset">Try again</button></div>
+        <p class="quiz-result" aria-live="polite" hidden></p>
+      </form>
+    </section>
+
+    <div class="resource-bottom-nav"><a href="{% url 'year_dashboard' year %}">← More Year {{ year }} subjects</a><a href="{% url 'learning_library' %}">Choose another year →</a></div>
+  </main>
+
+  <footer class="site-footer"><span>STUDY HUB / YEAR {{ year }} / {{ subject.name|upper }}</span><span>Keep learning at your pace.</span></footer>
+</body>
+</html>

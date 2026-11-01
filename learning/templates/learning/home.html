@@ -1,0 +1,83 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Study Hub — Learn something new</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Study Hub home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span>Study<span class="brand-light">Hub</span></span>
+    </a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="home-main">
+    <section class="hero" aria-labelledby="home-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> A LITTLE CURIOSITY GOES A LONG WAY</p>
+        <h1 id="home-title">Big ideas.<br><span>One step at a time.</span></h1>
+        <p class="hero-intro">Pick a subject and start exploring. Your next favourite thing to learn is just around the corner.</p>
+        <a class="primary-link" href="{% url 'science' %}">
+          <span>Explore Science</span>
+          <span class="arrow-circle" aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <aside class="hero-aside" aria-label="A note about learning">
+        <span class="orbit orbit-one" aria-hidden="true"></span>
+        <span class="orbit orbit-two" aria-hidden="true"></span>
+        <span class="orbit-sun" aria-hidden="true">✦</span>
+        <div class="aside-caption">
+          <span class="aside-kicker">YOUR NEXT DESTINATION</span>
+          <strong>Curiosity<br>starts here.</strong>
+          <span class="aside-footnote">Choose a subject below to begin.</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="subjects-section" aria-labelledby="subjects-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> FIND YOUR SUBJECT</p>
+          <h2 id="subjects-title">Where to today?</h2>
+        </div>
+        <span class="section-count">{{ ready_count|stringformat:"02d" }} <span>/ 03 READY TO EXPLORE</span></span>
+      </div>
+
+      <div class="subject-grid">
+        {% for subject in subjects %}
+          {% if subject.available %}
+            <a class="subject-card subject-card--available subject-card--{{ subject.slug }}" href="{% url subject.url_name %}">
+              <span class="card-topline"><span>{{ subject.number }}</span><span class="card-status"><span class="status-dot"></span> START HERE</span></span>
+              <span class="subject-icon subject-icon--{{ subject.slug }}" aria-hidden="true">{% if subject.slug == 'science' %}✳{% elif subject.slug == 'maths' %}∑{% else %}Aa{% endif %}</span>
+              <span class="subject-name">{{ subject.name }}</span>
+              <span class="subject-description">{{ subject.description }}</span>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </a>
+          {% else %}
+            <div class="subject-card subject-card--soon" aria-label="{{ subject.name }}, coming soon">
+              <span class="card-topline"><span>{{ subject.number }}</span><span class="card-status card-status--soon">COMING SOON</span></span>
+              <span class="subject-icon" aria-hidden="true">{% if subject.slug == 'maths' %}∑{% else %}Aa{% endif %}</span>
+              <span class="subject-name">{{ subject.name }}</span>
+              <span class="subject-description">{{ subject.description }}</span>
+              <span class="card-arrow card-arrow--muted" aria-hidden="true">· · ·</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>STUDY HUB</span><span>Keep asking questions.</span></footer>
+</body>
+</html>

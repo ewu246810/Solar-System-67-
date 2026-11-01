@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Year {{ year }} study subjects — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">CHANGE YEAR <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="library-main year-dashboard-main">
+    <a class="back-link" href="{% url 'learning_library' %}"><span aria-hidden="true">←</span> All school years</a>
+    <section class="year-welcome">
+      <p class="eyebrow"><span class="eyebrow-line"></span> {{ band|upper }} · STUDY HUB</p>
+      <h1>Year {{ year }}<br><span>pick a subject.</span></h1>
+      <p>Each subject has a short article, key notes, and a three-question quiz with explanations.</p>
+    </section>
+    <div class="year-subject-grid">
+      {% for subject in subjects %}
+        <a class="year-subject-card year-subject-card--{{ subject.tone }}" href="{{ subject.url }}">
+          <span class="year-subject-top"><span>{{ subject.icon }}</span><span>YEAR {{ year }} / {{ forloop.counter|stringformat:"02d" }}</span></span>
+          <span class="year-subject-name">{{ subject.name }}</span>
+          <span class="year-subject-topic">{{ subject.topic }}</span>
+          <span class="year-subject-bottom">NOTES <span>·</span> ARTICLE <span>·</span> MINI TEST <span class="year-card-arrow" aria-hidden="true">↗</span></span>
+        </a>
+      {% endfor %}
+    </div>
+    <nav class="year-switcher" aria-label="Choose a different year">
+      {% if year > 1 %}<a href="{% url 'year_dashboard' year|add:'-1' %}">← Year {{ year|add:'-1' }}</a>{% endif %}
+      {% if year < 12 %}<a href="{% url 'year_dashboard' year|add:'1' %}">Year {{ year|add:'1' }} →</a>{% endif %}
+    </nav>
+  </main>
+
+  <footer class="site-footer"><span>STUDY HUB / YEAR {{ year }}</span><span>Choose a subject to begin.</span></footer>
+</body>
+</html>

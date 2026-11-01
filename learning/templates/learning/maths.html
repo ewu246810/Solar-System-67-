@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Maths Study — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span>Study<span class="brand-light">Hub</span></span>
+    </a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 PRACTICE <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="science-main subject-main">
+    <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Back to all subjects</a>
+    <section class="science-panel subject-panel subject-panel--maths" aria-labelledby="maths-title">
+      <div class="science-panel-copy subject-panel-copy">
+        <p class="eyebrow eyebrow--maths"><span class="eyebrow-line"></span> SUBJECT 02 · NUMBERS AND PATTERNS</p>
+        <h1 id="maths-title">Maths, made<br><span>one step at a time.</span></h1>
+        <p class="science-welcome">Welcome to Maths Study. Maths helps us spot patterns, solve puzzles, and make sense of everyday things. Start with one idea, then build your confidence from there.</p>
+        <p class="science-meta">NOTICE A PATTERN · TRY A METHOD · CHECK YOUR ANSWER</p>
+      </div>
+      <div class="science-art subject-art subject-art--maths" aria-hidden="true">
+        <span class="science-orbit"></span>
+        <span class="science-orbit science-orbit--wide"></span>
+        <span class="science-sun">∑</span>
+        <span class="science-planet">π</span>
+      </div>
+    </section>
+
+    <section class="study-section" aria-labelledby="maths-topics-title">
+      <div class="study-heading">
+        <div><p class="eyebrow eyebrow--maths"><span class="eyebrow-line"></span> PICK A PLACE TO START</p><h2 id="maths-topics-title">Maths, step by step</h2></div>
+        <span class="study-heading-note">THREE STARTER TOPICS</span>
+      </div>
+      <div class="topic-grid">
+        <article class="topic-card topic-card--maths"><span class="topic-number">01 / NUMBER SENSE</span><h3>Fractions & percentages</h3><p>Compare parts of a whole and see how fractions, decimals, and percentages connect.</p></article>
+        <article class="topic-card topic-card--maths"><span class="topic-number">02 / ALGEBRA</span><h3>Find the unknown</h3><p>Use letters to stand for missing numbers and learn how to balance an equation.</p></article>
+        <article class="topic-card topic-card--maths"><span class="topic-number">03 / GEOMETRY</span><h3>Shapes & space</h3><p>Explore angles, area, and the shapes you can find all around you.</p></article>
+      </div>
+      <details class="practice-card practice-card--maths">
+        <summary><span class="practice-label">QUICK WARM-UP</span><span>What is 25% of 80?</span><span class="practice-toggle" aria-hidden="true">+</span></summary>
+        <p><strong>Answer: 20.</strong> 25% is one quarter. One quarter of 80 is 80 ÷ 4 = 20.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>STUDY HUB / MATHS</span><span>Small steps add up.</span></footer>
+</body>
+</html>

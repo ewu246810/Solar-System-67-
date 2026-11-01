@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Choose a year — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'home' %}">BACK TO HOME <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="library-main">
+    <section class="library-intro">
+      <p class="eyebrow"><span class="eyebrow-line"></span> YOUR LEARNING, YOUR PACE</p>
+      <h1>Choose your<br><span>school year.</span></h1>
+      <p>Pick a year to find Maths, English, and Science notes, short reads, and quick quizzes made for that level.</p>
+    </section>
+
+    <section aria-labelledby="year-list-title">
+      <div class="library-section-heading"><h2 id="year-list-title">Years 1 to 12</h2><span>12 YEAR LEVELS</span></div>
+      <div class="year-grid">
+        {% for year in years %}
+          <a class="year-card" href="{% url 'year_dashboard' year.number %}">
+            <span class="year-card-number">{{ year.number|stringformat:"02d" }}</span>
+            <span class="year-card-name">Year {{ year.number }}</span>
+            <span class="year-card-band">{{ year.band }}</span>
+            <span class="year-card-arrow" aria-hidden="true">↗</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+    <p class="library-note">These are starter study guides for practice and revision. Use your class notes and teacher’s instructions as your main guide.</p>
+  </main>
+
+  <footer class="site-footer"><span>STUDY HUB / YEAR 1–12</span><span>Pick a year and keep exploring.</span></footer>
+</body>
+</html>

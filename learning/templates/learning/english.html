@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>English Study — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span>Study<span class="brand-light">Hub</span></span>
+    </a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 PRACTICE <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="science-main subject-main">
+    <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Back to all subjects</a>
+    <section class="science-panel subject-panel subject-panel--english" aria-labelledby="english-title">
+      <div class="science-panel-copy subject-panel-copy">
+        <p class="eyebrow eyebrow--english"><span class="eyebrow-line"></span> SUBJECT 03 · WORDS AND IDEAS</p>
+        <h1 id="english-title">Find the<br><span>right words.</span></h1>
+        <p class="science-welcome">Welcome to English Study. Reading helps us discover new ideas, and writing helps us share our own. Explore a story, shape a sentence, and make your meaning clear.</p>
+        <p class="science-meta">READ CLOSELY · WRITE CLEARLY · KEEP YOUR VOICE</p>
+      </div>
+      <div class="science-art subject-art subject-art--english" aria-hidden="true">
+        <span class="science-orbit"></span>
+        <span class="science-orbit science-orbit--wide"></span>
+        <span class="science-sun">Aa</span>
+        <span class="science-planet">“</span>
+      </div>
+    </section>
+
+    <section class="study-section" aria-labelledby="english-topics-title">
+      <div class="study-heading">
+        <div><p class="eyebrow eyebrow--english"><span class="eyebrow-line"></span> PICK A PLACE TO START</p><h2 id="english-topics-title">Explore with words</h2></div>
+        <span class="study-heading-note">THREE STARTER TOPICS</span>
+      </div>
+      <div class="topic-grid">
+        <article class="topic-card topic-card--english"><span class="topic-number">01 / READING</span><h3>Look for clues</h3><p>Find the main idea, notice details, and use evidence to understand a text.</p></article>
+        <article class="topic-card topic-card--english"><span class="topic-number">02 / WRITING</span><h3>Shape your ideas</h3><p>Plan a beginning, middle, and ending so your thoughts are easy to follow.</p></article>
+        <article class="topic-card topic-card--english"><span class="topic-number">03 / LANGUAGE</span><h3>Choose your words</h3><p>Explore vocabulary, punctuation, and the small choices that make meaning clear.</p></article>
+      </div>
+      <details class="practice-card practice-card--english">
+        <summary><span class="practice-label">READING WARM-UP</span><span>What can you infer from this short scene?</span><span class="practice-toggle" aria-hidden="true">+</span></summary>
+        <div class="reading-prompt"><p>“The rain stopped just before sunset. Maya stepped into the garden and carefully lifted a small blue notebook from beneath the bench.”</p><p>Why might Maya lift the notebook carefully?</p><p><strong>One possible answer:</strong> She may be trying not to damage it. The word “carefully” is a clue about how she handles the notebook.</p></div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>STUDY HUB / ENGLISH</span><span>Words open new worlds.</span></footer>
+</body>
+</html>

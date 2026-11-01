@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Science Study — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span>Study<span class="brand-light">Hub</span></span>
+    </a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 PRACTICE <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="science-main">
+    <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Back to all subjects</a>
+    <section class="science-panel" aria-labelledby="science-title">
+      <div class="science-panel-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> SUBJECT 01 · THE NATURAL WORLD</p>
+        <h1 id="science-title">Science<br><span>starts with a question.</span></h1>
+        <p class="science-welcome">Welcome to Science Study. Begin with our solar system: the Sun, eight planets, and countless smaller worlds sharing one cosmic neighbourhood. Take a look around and see what you discover.</p>
+        <p class="science-meta">OUR COSMIC NEIGHBOURHOOD · 8 PLANETS · COUNTLESS THINGS TO DISCOVER</p>
+        <a class="primary-link science-link" href="{% url 'solar_system' %}">
+          <span>Open the 3D solar system</span>
+          <span class="arrow-circle" aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div class="science-art" aria-hidden="true">
+        <span class="science-orbit"></span>
+        <span class="science-orbit science-orbit--wide"></span>
+        <span class="science-sun"></span>
+        <span class="science-planet"></span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>STUDY HUB / SCIENCE</span><span>Keep asking questions.</span></footer>
+</body>
+</html>
