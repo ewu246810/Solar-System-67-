@@ -1,0 +1,122 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <meta name="description" content="A beginner-friendly guide to Django, the Python web framework.">
+  <title>Learn Django — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body class="resource-page resource-page--django">
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span>Study<span class="brand-light">Hub</span></span>
+    </a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="resource-main django-main">
+    <nav class="resource-breadcrumbs" aria-label="Breadcrumb">
+      <a href="{% url 'home' %}">Study Hub</a><span aria-hidden="true">/</span><span>Django</span>
+    </nav>
+
+    <section class="resource-hero django-hero" aria-labelledby="django-title">
+      <div class="resource-subject-icon django-mark" aria-hidden="true">Py</div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> A BEGINNER'S GUIDE TO WEB DEVELOPMENT</p>
+      <h1 id="django-title">Meet Django,<br><span>your Python web toolkit.</span></h1>
+      <p>Django is a framework: a set of ready-made tools and patterns that helps Python developers build websites. It can take care of common jobs, so you can focus on what your site should do.</p>
+    </section>
+
+    <nav class="resource-jump" aria-label="On this page">
+      <a href="#what-is-django"><span>01</span> What it is</a>
+      <a href="#how-it-works"><span>02</span> How it works</a>
+      <a href="#django-files"><span>03</span> Key files</a>
+      <a href="#django-facts"><span>04</span> More facts</a>
+    </nav>
+
+    <section class="resource-section" id="what-is-django" aria-labelledby="what-title">
+      <div class="resource-section-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> THE BIG IDEA</p>
+        <h2 id="what-title">What does Django do?</h2>
+      </div>
+      <div class="django-copy-card">
+        <p>When someone visits a website, the browser asks the website's computer for a page. Django helps your Python program receive that request, decide what information is needed, and send a response back—often an HTML page.</p>
+        <p>It is used for the part of a website that runs on the server. Django can work alongside HTML and CSS (which shape the page) and JavaScript (which can add interactions in the browser).</p>
+      </div>
+      <div class="django-flow" aria-label="A simplified Django request flow">
+        <div class="django-flow-step"><span>1</span><strong>Browser</strong><small>asks for /books/</small></div>
+        <span class="django-flow-arrow" aria-hidden="true">→</span>
+        <div class="django-flow-step"><span>2</span><strong>URL pattern</strong><small>finds the right view</small></div>
+        <span class="django-flow-arrow" aria-hidden="true">→</span>
+        <div class="django-flow-step"><span>3</span><strong>View</strong><small>gets data and prepares a page</small></div>
+        <span class="django-flow-arrow" aria-hidden="true">→</span>
+        <div class="django-flow-step"><span>4</span><strong>Response</strong><small>page goes back to browser</small></div>
+      </div>
+      <p class="django-caption">A simplified journey: Django routes the request, runs your code, then sends a response.</p>
+    </section>
+
+    <section class="resource-section" id="how-it-works" aria-labelledby="how-title">
+      <div class="resource-section-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> FOLLOW THE REQUEST</p>
+        <h2 id="how-title">How the pieces work together</h2>
+        <p>Imagine a page that shows a list of books.</p>
+      </div>
+      <div class="django-cards">
+        <article class="django-card"><span class="django-card-number">01 / URLS</span><h3>Match the address</h3><p>A URL pattern connects an address, such as <code>/books/</code>, to the Python view that should handle it.</p></article>
+        <article class="django-card"><span class="django-card-number">02 / VIEWS</span><h3>Choose what to do</h3><p>A view is a Python function (or class) that handles the request. It might ask a model for books, then choose a page to show.</p></article>
+        <article class="django-card"><span class="django-card-number">03 / MODELS</span><h3>Describe saved data</h3><p>A model describes information, such as a book's title and author. Django can use it to read and save records in a database.</p></article>
+        <article class="django-card"><span class="django-card-number">04 / TEMPLATES</span><h3>Build the HTML</h3><p>A template is a page layout. Django can put the book information into it and send the finished HTML to the browser.</p></article>
+      </div>
+      <div class="django-tip"><strong>Easy way to remember</strong><span><code>urls.py</code> points to a <code>view</code>; the view can use a <code>model</code> for data and a <code>template</code> for HTML.</span></div>
+    </section>
+
+    <section class="resource-section" id="django-files" aria-labelledby="files-title">
+      <div class="resource-section-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> INSIDE A DJANGO APP</p>
+        <h2 id="files-title">Files you will often meet</h2>
+      </div>
+      <div class="django-file-list">
+        <div><code>models.py</code><p>Describes the data your app stores.</p></div>
+        <div><code>views.py</code><p>Contains code that responds to requests.</p></div>
+        <div><code>urls.py</code><p>Maps web addresses to views.</p></div>
+        <div><code>templates/</code><p>Holds HTML pages that Django can fill with data.</p></div>
+        <div><code>admin.py</code><p>Connects models to Django's built-in admin area.</p></div>
+      </div>
+      <div class="django-code-card">
+        <div class="django-code-heading"><span>IN PLAIN PYTHON</span><span>views.py</span></div>
+        <pre><code>from django.shortcuts import render
+
+def welcome(request):
+    return render(request, "welcome.html")</code></pre>
+        <p>This small view asks Django to return the <code>welcome.html</code> template as a web response.</p>
+      </div>
+    </section>
+
+    <section class="resource-section" id="django-facts" aria-labelledby="facts-title">
+      <div class="resource-section-heading">
+        <p class="eyebrow"><span class="eyebrow-line"></span> EXTRA THINGS TO KNOW</p>
+        <h2 id="facts-title">Django facts</h2>
+      </div>
+      <div class="django-facts-grid">
+        <article><span>FACT 01</span><h3>It is written in Python</h3><p>If you know Python, Django lets you use it to build the server side of a website.</p></article>
+        <article><span>FACT 02</span><h3>It includes useful tools</h3><p>It comes with features for things like forms, user accounts, and an admin site for managing data.</p></article>
+        <article><span>FACT 03</span><h3>It works with databases</h3><p>Django's model tools let Python code work with database records without writing every database command by hand.</p></article>
+        <article><span>FACT 04</span><h3>It helps with safety</h3><p>Django includes protections for common web risks. Developers still need to use the tools carefully and follow good security practices.</p></article>
+        <article><span>FACT 05</span><h3>It is open source</h3><p>Its source code is public, and people around the world help maintain and improve it.</p></article>
+        <article><span>FACT 06</span><h3>It has a tiny namesake</h3><p>Django was named after Django Reinhardt, a well-known jazz guitarist.</p></article>
+      </div>
+      <div class="django-takeaway"><span aria-hidden="true">✦</span><p><strong>Remember:</strong> Django is the Python toolkit that connects web addresses, Python code, stored data, and HTML pages.</p></div>
+    </section>
+
+    <div class="resource-bottom-nav"><a href="{% url 'home' %}">← Back to all subjects</a><a href="{% url 'learning_library' %}">Explore the year library →</a></div>
+  </main>
+  <footer class="site-footer"><span>STUDY HUB / DJANGO</span><span>Keep asking questions.</span></footer>
+</body>
+</html>

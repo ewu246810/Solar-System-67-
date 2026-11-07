@@ -208,6 +208,50 @@ a.subject-card--english:hover { border-color: rgba(198, 169, 255, .4); }
 .resource-page { --subject-accent: var(--mint); }
 .resource-page--maths { --subject-accent: #f2c479; }
 .resource-page--english { --subject-accent: #c6a9ff; }
+.resource-page--django { --subject-accent: #9bdfaa; }
+.subject-icon--django { color: #9bdfaa; font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500; }
+.subject-card--django .card-status .status-dot { background: #9bdfaa; box-shadow: 0 0 12px rgba(155, 223, 170, .55); }
+.subject-card--django .card-arrow { color: #9bdfaa; }
+a.subject-card--django:hover { border-color: rgba(155, 223, 170, .4); }
+.resource-page--django .resource-hero { border-color: rgba(155, 223, 170, .22); background: linear-gradient(120deg, rgba(82, 158, 107, .1), rgba(10, 20, 33, .78)); }
+.resource-page--django .resource-subject-icon { border-color: rgba(155, 223, 170, .38); background: rgba(155, 223, 170, .08); }
+.resource-page--django .resource-hero h1 span { color: var(--subject-accent); }
+.django-mark { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
+.django-copy-card, .django-tip, .django-takeaway { border: 1px solid var(--line); border-radius: 12px; background: rgba(17, 30, 46, .58); }
+.django-copy-card { padding: 22px 24px; border-left: 2px solid var(--subject-accent); }
+.django-copy-card p { max-width: 790px; margin: 0; color: #bac5d0; font-size: 12px; line-height: 1.85; }
+.django-copy-card p + p { margin-top: 12px; }
+.django-flow { display: flex; align-items: center; justify-content: space-between; gap: 11px; margin-top: 15px; padding: 17px; border: 1px solid var(--line); border-radius: 12px; background: rgba(6, 16, 27, .55); }
+.django-flow-step { min-width: 0; display: flex; flex: 1; flex-direction: column; gap: 6px; }
+.django-flow-step > span { color: var(--subject-accent); font-family: 'DM Mono', monospace; font-size: 9px; }
+.django-flow-step strong { font-size: 11px; }
+.django-flow-step small { color: var(--muted); font-size: 9px; line-height: 1.5; }
+.django-flow-arrow { color: var(--subject-accent); }
+.django-caption { margin: 9px 0 0; color: #718092; font-size: 9px; }
+.django-cards, .django-facts-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+.django-card, .django-facts-grid article { padding: 18px 19px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+.django-card-number, .django-facts-grid article > span, .django-code-heading { color: var(--subject-accent); font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .1em; }
+.django-card h3, .django-facts-grid h3 { margin: 11px 0 7px; font-size: 14px; letter-spacing: -.025em; }
+.django-card p, .django-facts-grid p { margin: 0; color: #aebac7; font-size: 10px; line-height: 1.8; }
+.django-page code, .resource-page--django code { padding: 2px 5px; border: 1px solid rgba(155, 223, 170, .15); border-radius: 4px; color: #c5e9cb; background: rgba(155, 223, 170, .06); font-family: 'DM Mono', monospace; font-size: .92em; }
+.django-tip { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; padding: 16px 18px; }
+.django-tip strong { color: var(--subject-accent); font-size: 11px; }
+.django-tip span { color: #aebac7; font-size: 10px; line-height: 1.7; }
+.django-file-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.django-file-list > div { padding: 13px 15px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.django-file-list code { color: var(--subject-accent); font-family: 'DM Mono', monospace; font-size: 10px; }
+.django-file-list p { margin: 6px 0 0; color: #9eacbb; font-size: 10px; line-height: 1.6; }
+.django-code-card { margin-top: 11px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(5, 14, 24, .55); }
+.django-code-heading { display: flex; justify-content: space-between; padding: 13px 16px; border-bottom: 1px solid var(--line); }
+.django-code-card pre { margin: 0; padding: 17px; overflow-x: auto; color: #d4e0e8; font-family: 'DM Mono', monospace; font-size: 11px; line-height: 1.8; }
+.django-code-card pre code { padding: 0; border: 0; color: inherit; background: transparent; }
+.django-code-card > p { margin: 0; padding: 0 17px 15px; color: #9eacbb; font-size: 10px; line-height: 1.7; }
+.django-facts-grid article { min-height: 133px; }
+.django-facts-grid h3 { margin-top: 10px; }
+.django-takeaway { display: flex; align-items: flex-start; gap: 12px; margin-top: 12px; padding: 16px 18px; border-color: rgba(155, 223, 170, .22); }
+.django-takeaway > span { color: var(--subject-accent); }
+.django-takeaway p { margin: 0; color: #bac5d0; font-size: 11px; line-height: 1.7; }
+.django-takeaway strong { color: #e0f2e3; }
 .resource-main { padding-top: 32px; padding-bottom: 54px; }
 .resource-breadcrumbs { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 30px; color: #6e7d8e; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .04em; }
 .resource-breadcrumbs a { color: #9dabb9; text-decoration: none; }
@@ -305,6 +349,12 @@ a.subject-card--english:hover { border-color: rgba(198, 169, 255, .4); }
   .resource-subject-icon { margin-bottom: 16px; }
   .resource-jump { margin-bottom: 26px; }
   .note-grid { grid-template-columns: 1fr; }
+  .django-cards, .django-facts-grid, .django-file-list { grid-template-columns: 1fr; }
+  .django-flow { align-items: stretch; flex-direction: column; }
+  .django-flow-step { display: grid; grid-template-columns: 22px 1fr; gap: 3px 8px; }
+  .django-flow-step > span { grid-row: span 2; }
+  .django-flow-arrow { align-self: center; transform: rotate(90deg); }
+  .django-copy-card { padding: 18px; }
   .note-card { min-height: 70px; }
   .article-card { padding: 18px; }
   .article-card p { font-size: 12px; }

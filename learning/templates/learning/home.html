@@ -51,7 +51,7 @@
           <p class="eyebrow"><span class="eyebrow-line"></span> FIND YOUR SUBJECT</p>
           <h2 id="subjects-title">Where to today?</h2>
         </div>
-        <span class="section-count">{{ ready_count|stringformat:"02d" }} <span>/ 03 READY TO EXPLORE</span></span>
+        <span class="section-count">{{ ready_count|stringformat:"02d" }} <span>/ 04 READY TO EXPLORE</span></span>
       </div>
 
       <div class="subject-grid">
@@ -59,7 +59,7 @@
           {% if subject.available %}
             <a class="subject-card subject-card--available subject-card--{{ subject.slug }}" href="{% url subject.url_name %}">
               <span class="card-topline"><span>{{ subject.number }}</span><span class="card-status"><span class="status-dot"></span> START HERE</span></span>
-              <span class="subject-icon subject-icon--{{ subject.slug }}" aria-hidden="true">{% if subject.slug == 'science' %}✳{% elif subject.slug == 'maths' %}∑{% else %}Aa{% endif %}</span>
+              <span class="subject-icon subject-icon--{{ subject.slug }}" aria-hidden="true">{% if subject.slug == 'science' %}✳{% elif subject.slug == 'maths' %}∑{% elif subject.slug == 'english' %}Aa{% else %}Py{% endif %}</span>
               <span class="subject-name">{{ subject.name }}</span>
               <span class="subject-description">{{ subject.description }}</span>
               <span class="card-arrow" aria-hidden="true">↗</span>
@@ -67,7 +67,7 @@
           {% else %}
             <div class="subject-card subject-card--soon" aria-label="{{ subject.name }}, coming soon">
               <span class="card-topline"><span>{{ subject.number }}</span><span class="card-status card-status--soon">COMING SOON</span></span>
-              <span class="subject-icon" aria-hidden="true">{% if subject.slug == 'maths' %}∑{% else %}Aa{% endif %}</span>
+              <span class="subject-icon" aria-hidden="true">{% if subject.slug == 'maths' %}∑{% elif subject.slug == 'django' %}Py{% else %}Aa{% endif %}</span>
               <span class="subject-name">{{ subject.name }}</span>
               <span class="subject-description">{{ subject.description }}</span>
               <span class="card-arrow card-arrow--muted" aria-hidden="true">· · ·</span>

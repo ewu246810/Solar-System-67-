@@ -27,6 +27,8 @@
     .ui { position: fixed; z-index: 2; inset: 0; pointer-events: none; }
     .ui button, .ui input, .planet-list { pointer-events: auto; }
     .topbar { position: absolute; top: 28px; left: 38px; right: 38px; display: flex; align-items: center; justify-content: space-between; }
+    .back-to-science { position: absolute; z-index: 3; top: 78px; left: 42px; display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 12px; border: 1px solid rgba(239,231,210,.16); border-radius: 999px; color: #c4c2bd; background: rgba(13,16,24,.66); font: 9px 'DM Mono', monospace; letter-spacing: .06em; text-decoration: none; backdrop-filter: blur(10px); transition: border-color .2s, color .2s, background .2s; pointer-events: auto; }
+    .back-to-science:hover, .back-to-science:focus-visible { border-color: rgba(246,182,109,.5); color: #f6c995; background: rgba(246,182,109,.08); }
     .brand { display: flex; align-items: center; gap: 13px; }
     .brand-mark { width: 32px; height: 32px; border: 1px solid rgba(246,182,109,.55); border-radius: 50%; position: relative; display: grid; place-items: center; }
     .brand-mark:before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 13px #ffbc70; }
@@ -99,9 +101,10 @@
     .mobile-planet { display: none; }
     @media (max-width: 760px) {
       .topbar { top: 18px; left: 20px; right: 20px; }
+      .back-to-science { top: 61px; left: 21px; min-height: 31px; }
       .top-meta { gap: 10px; font-size: 8px; }
       .top-meta .session { display: none; }
-      .intro { top: 87px; left: 21px; width: 170px; }
+      .intro { top: 105px; left: 21px; width: 170px; }
       h1 { font-size: 26px; }
       .intro p { font-size: 9px; max-width: 165px; }
       .planet-list { display: none; }
@@ -133,6 +136,7 @@
       <div class="brand"><div class="brand-mark"></div><div><div class="brand-name">ORBITAL</div><span class="brand-sub">A SOLAR OBSERVATORY</span></div></div>
       <div class="top-meta"><span class="session">SOL SYSTEM&nbsp; / &nbsp;01</span><span class="divider"></span><span class="live"><i></i> LIVE SIMULATION</span></div>
     </header>
+    <a class="back-to-science" href="/science/" aria-label="Back to the Science page"><span aria-hidden="true">←</span> BACK TO SCIENCE</a>
     <section class="intro"><div class="eyebrow">Our neighbourhood</div><h1>The Solar<br>System</h1><p>Eight worlds, one star. Take a closer look at our small corner of the cosmos.</p></section>
     <nav class="planet-list" aria-label="Select a planet"></nav>
     <div class="hint"><span>DRAG</span> to orbit &nbsp;·&nbsp; <span>SCROLL</span> to zoom<br><span>CLICK</span> a planet to explore</div>
