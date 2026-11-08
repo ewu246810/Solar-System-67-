@@ -40,6 +40,14 @@ def home(request):
             'url_name': 'django',
             'number': '04',
         },
+        {
+            'name': 'Coding',
+            'slug': 'coding',
+            'description': 'Discover how instructions turn ideas into digital projects.',
+            'available': True,
+            'url_name': 'coding',
+            'number': '05',
+        },
     ]
     ready_count = sum(subject['available'] for subject in subjects)
     return render(request, 'learning/home.html', {
@@ -62,6 +70,10 @@ def english(request):
 
 def django(request):
     return render(request, 'learning/django.html')
+
+
+def coding(request):
+    return render(request, 'learning/coding.html')
 
 
 def learning_library(request):

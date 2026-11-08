@@ -1,0 +1,108 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <meta name="description" content="A beginner's guide to coding, websites, and common web terms.">
+  <title>Learn Coding — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body class="resource-page resource-page--coding">
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="resource-main">
+    <nav class="resource-breadcrumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Study Hub</a><span aria-hidden="true">/</span><span>Coding</span></nav>
+    <section class="resource-hero" aria-labelledby="coding-title">
+      <div class="resource-subject-icon coding-mark" aria-hidden="true">&lt;/&gt;</div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> TURN IDEAS INTO INSTRUCTIONS</p>
+      <h1 id="coding-title">Meet coding,<br><span>the language of ideas.</span></h1>
+      <p>Coding is writing instructions that a computer can follow. People use code to make websites, games, apps, animations, and tools that solve problems.</p>
+    </section>
+
+    <nav class="resource-jump" aria-label="On this page">
+      <a href="#what-is-coding"><span>01</span> What it is</a><a href="#how-coding-works"><span>02</span> How it works</a><a href="#web-building-blocks"><span>03</span> Web building blocks</a><a href="#coding-questions"><span>04</span> Common questions</a><a href="#coding-facts"><span>05</span> More facts</a>
+    </nav>
+
+    <section class="resource-section" id="what-is-coding" aria-labelledby="what-coding-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> THE BIG IDEA</p><h2 id="what-coding-title">What is coding?</h2></div>
+      <div class="django-copy-card coding-copy-card">
+        <p>A computer can do many things, but it needs instructions. Coding means writing those instructions in a programming language, using rules the computer can understand. The computer follows the instructions to produce a result.</p>
+        <p>Some code tells a computer to show a message. Other code can respond to a button click, save information, draw a picture, or help run a website. Coders also test their instructions and fix mistakes, called bugs.</p>
+      </div>
+      <div class="django-flow coding-flow" aria-label="A simplified coding process">
+        <div class="django-flow-step"><span>1</span><strong>Idea</strong><small>decide what you want to happen</small></div><span class="django-flow-arrow" aria-hidden="true">→</span>
+        <div class="django-flow-step"><span>2</span><strong>Instructions</strong><small>write the steps as code</small></div><span class="django-flow-arrow" aria-hidden="true">→</span>
+        <div class="django-flow-step"><span>3</span><strong>Computer</strong><small>runs the instructions</small></div><span class="django-flow-arrow" aria-hidden="true">→</span>
+        <div class="django-flow-step"><span>4</span><strong>Result</strong><small>check it and improve it</small></div>
+      </div>
+      <p class="django-caption">Coding is a cycle: make something, see what happens, and improve it.</p>
+    </section>
+
+    <section class="resource-section" id="how-coding-works" aria-labelledby="how-coding-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> A TINY PROGRAM</p><h2 id="how-coding-title">Give the computer an instruction</h2><p>Here is a short example in Python.</p></div>
+      <div class="django-code-card coding-code-card">
+        <div class="django-code-heading"><span>PYTHON CODE</span><span>hello.py</span></div>
+        <pre><code>print("Hello, world!")</code></pre>
+        <p><code>print</code> tells Python to show the words inside the quotation marks. When you run this program, the computer displays: <strong>Hello, world!</strong></p>
+      </div>
+      <div class="django-cards coding-card-grid">
+        <article class="django-card"><span class="django-card-number">SEQUENCE</span><h3>Order matters</h3><p>Instructions usually run in order, from the first step to the next.</p></article>
+        <article class="django-card"><span class="django-card-number">CHOICES</span><h3>Make decisions</h3><p>A program can check a condition and choose which instructions to follow.</p></article>
+        <article class="django-card"><span class="django-card-number">LOOPS</span><h3>Repeat a task</h3><p>A loop can repeat instructions, such as drawing each side of a shape.</p></article>
+        <article class="django-card"><span class="django-card-number">DEBUGGING</span><h3>Find and fix bugs</h3><p>When code does not work as expected, check the instructions and correct the problem.</p></article>
+      </div>
+    </section>
+
+    <section class="resource-section" id="web-building-blocks" aria-labelledby="web-building-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> HOW A WEBSITE COMES TO LIFE</p><h2 id="web-building-title">Different tools have different jobs</h2><p>A website can use several languages and services together.</p></div>
+      <div class="django-cards coding-card-grid">
+        <article class="django-card"><span class="django-card-number">HTML / STRUCTURE</span><h3>What is on the page?</h3><p>HTML marks up content, such as headings, paragraphs, images, and links.</p></article>
+        <article class="django-card"><span class="django-card-number">CSS / APPEARANCE</span><h3>How does it look?</h3><p>CSS controls colours, fonts, spacing, and how page elements are arranged.</p></article>
+        <article class="django-card"><span class="django-card-number">JAVASCRIPT / ACTION</span><h3>How does it respond?</h3><p>JavaScript can make a page react to clicks, keyboard input, or new information.</p></article>
+        <article class="django-card"><span class="django-card-number">PYTHON / DJANGO</span><h3>What happens behind it?</h3><p>Python with Django can handle requests, work with saved data, and prepare pages on a web server.</p></article>
+      </div>
+    </section>
+
+    <section class="resource-section" id="coding-questions" aria-labelledby="coding-questions-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> COMMON QUESTIONS</p><h2 id="coding-questions-title">Web and coding words, explained</h2><p>Tap a question to see its answer.</p></div>
+      <div class="coding-faq-list">
+        <details class="coding-faq-item"><summary><span>What does HTML do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>HTML gives a web page its structure and content, such as headings, paragraphs, images, and links.</p></details>
+        <details class="coding-faq-item"><summary><span>What does CSS do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>CSS controls how a web page looks, including colours, fonts, spacing, and layout.</p></details>
+        <details class="coding-faq-item"><summary><span>What does JavaScript do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>JavaScript can make a web page interactive, for example by responding when someone clicks a button or by updating content on the page.</p></details>
+        <details class="coding-faq-item"><summary><span>What is a database?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>A database stores and organises information so an app or website can save it and find it later, such as account details or game scores.</p></details>
+        <details class="coding-faq-item"><summary><span>What is an API?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>An API is a way for different programs to communicate. For example, a weather app can use an API to ask a weather service for forecast information.</p></details>
+        <details class="coding-faq-item"><summary><span>What does <code>models.py</code> do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>In a Django app, <code>models.py</code> describes the data the app works with. Django can use models to save and retrieve that data from a database.</p></details>
+        <details class="coding-faq-item"><summary><span>What does <code>views.py</code> do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>In Django, <code>views.py</code> contains code that handles web requests. A view can get information, decide what to show, and return a response such as a web page.</p></details>
+        <details class="coding-faq-item"><summary><span>What does <code>urls.py</code> do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>In Django, <code>urls.py</code> maps web addresses to views. For example, it can connect <code>/books/</code> to the view that shows a list of books.</p></details>
+        <details class="coding-faq-item"><summary><span>What does <code>manage.py</code> do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p><code>manage.py</code> is a command-line helper for your Django project. You can use it to start the development server and run Django commands, such as creating and applying database migrations.</p></details>
+        <details class="coding-faq-item"><summary><span>What's the difference between project and app <code>urls.py</code> files?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>The project <code>urls.py</code> is the main address book for the whole website. It can send a group of addresses to an app. The app <code>urls.py</code> maps addresses within that app to specific views.</p></details>
+        <details class="coding-faq-item"><summary><span>Why do we see <code>__init__.py</code> in many folders?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p><code>__init__.py</code> marks a folder as a Python package, which lets code in it be organised and imported. It is often empty, but it can also contain package setup code.</p></details>
+        <details class="coding-faq-item"><summary><span>What does <code>settings.py</code> do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p><code>settings.py</code> holds configuration for the Django project, such as which apps are enabled and how the database, templates, and security options are set up.</p></details>
+        <details class="coding-faq-item"><summary><span>What does the app's <code>migrations</code> folder do?</span><span class="coding-faq-toggle" aria-hidden="true">+</span></summary><p>It stores instructions for changing the database when your models change. For example, a migration can add a database column for a new model field.</p></details>
+      </div>
+    </section>
+
+    <section class="resource-section" id="coding-facts" aria-labelledby="coding-facts-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> EXTRA THINGS TO KNOW</p><h2 id="coding-facts-title">Coding is for problem-solving</h2></div>
+      <div class="note-grid">
+        <article class="note-card"><span class="note-card-number">01</span><p>There are many programming languages. Different ones suit different kinds of projects.</p></article>
+        <article class="note-card"><span class="note-card-number">02</span><p>Computers follow instructions exactly, so small details such as spelling and punctuation can matter.</p></article>
+        <article class="note-card"><span class="note-card-number">03</span><p>A bug is a mistake or problem in a program. Finding and fixing bugs is a normal part of coding.</p></article>
+        <article class="note-card"><span class="note-card-number">04</span><p>You can learn coding by making small projects, experimenting, and improving them one step at a time.</p></article>
+      </div>
+      <div class="django-takeaway"><span aria-hidden="true">✦</span><p><strong>Remember:</strong> code is a set of instructions. Break a big idea into small steps, try them out, and keep improving.</p></div>
+    </section>
+    <div class="resource-bottom-nav"><a href="{% url 'home' %}">← Back to all subjects</a><a href="{% url 'django' %}">Learn how Django builds websites →</a></div>
+  </main>
+  <footer class="site-footer"><span>STUDY HUB / CODING</span><span>Make something, then make it better.</span></footer>
+</body>
+</html>

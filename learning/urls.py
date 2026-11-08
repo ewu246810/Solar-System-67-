@@ -9,6 +9,7 @@ urlpatterns = [
     path('maths/', views.maths, name='maths'),
     path('english/', views.english, name='english'),
     path('django/', views.django, name='django'),
+    path('coding/', views.coding, name='coding'),
     path('learn/', views.learning_library, name='learning_library'),
     path('learn/year/<int:year>/', views.year_dashboard, name='year_dashboard'),
     path('learn/year/<int:year>/<slug:subject_slug>/', views.year_subject, name='year_subject'),

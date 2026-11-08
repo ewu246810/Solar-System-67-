@@ -209,9 +209,14 @@ a.subject-card--english:hover { border-color: rgba(198, 169, 255, .4); }
 .resource-page--maths { --subject-accent: #f2c479; }
 .resource-page--english { --subject-accent: #c6a9ff; }
 .resource-page--django { --subject-accent: #9bdfaa; }
+.resource-page--coding { --subject-accent: #8ab8ff; }
 .resource-page--maths .resource-hero h1 span,
 .resource-page--english .resource-hero h1 span,
 .resource-page--science .resource-hero h1 span { color: var(--subject-accent); }
+.subject-icon--coding { color: #8ab8ff; font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
+.subject-card--coding .card-status .status-dot { background: #8ab8ff; box-shadow: 0 0 12px rgba(138, 184, 255, .55); }
+.subject-card--coding .card-arrow { color: #8ab8ff; }
+a.subject-card--coding:hover { border-color: rgba(138, 184, 255, .4); }
 .subject-icon--django { color: #9bdfaa; font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500; }
 .subject-card--django .card-status .status-dot { background: #9bdfaa; box-shadow: 0 0 12px rgba(155, 223, 170, .55); }
 .subject-card--django .card-arrow { color: #9bdfaa; }
@@ -219,6 +224,20 @@ a.subject-card--django:hover { border-color: rgba(155, 223, 170, .4); }
 .resource-page--django .resource-hero { border-color: rgba(155, 223, 170, .22); background: linear-gradient(120deg, rgba(82, 158, 107, .1), rgba(10, 20, 33, .78)); }
 .resource-page--django .resource-subject-icon { border-color: rgba(155, 223, 170, .38); background: rgba(155, 223, 170, .08); }
 .resource-page--django .resource-hero h1 span { color: var(--subject-accent); }
+.resource-page--coding .resource-hero { border-color: rgba(138, 184, 255, .22); background: linear-gradient(120deg, rgba(75, 119, 183, .12), rgba(10, 20, 33, .78)); }
+.resource-page--coding .resource-subject-icon { border-color: rgba(138, 184, 255, .38); background: rgba(138, 184, 255, .08); }
+.resource-page--coding .resource-hero h1 span { color: var(--subject-accent); }
+.coding-mark { color: var(--subject-accent); font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; }
+.resource-page--coding code { padding: 2px 5px; border: 1px solid rgba(138, 184, 255, .18); border-radius: 4px; color: #c9ddff; background: rgba(138, 184, 255, .06); font-family: 'DM Mono', monospace; font-size: .92em; }
+.coding-faq-list { display: grid; gap: 9px; }
+.coding-faq-item { overflow: hidden; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); }
+.coding-faq-item[open] { border-color: rgba(138, 184, 255, .28); }
+.coding-faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 58px; padding: 12px 17px; color: var(--ink); cursor: pointer; list-style: none; font-size: 12px; font-weight: 650; }
+.coding-faq-item summary::-webkit-details-marker { display: none; }
+.coding-faq-item summary::marker { content: ''; }
+.coding-faq-toggle { display: grid; width: 27px; height: 27px; flex: none; place-items: center; border: 1px solid rgba(138, 184, 255, .28); border-radius: 50%; color: var(--subject-accent); font-size: 17px; font-weight: 400; transition: transform .2s; }
+.coding-faq-item[open] .coding-faq-toggle { transform: rotate(45deg); }
+.coding-faq-item > p { margin: 0; padding: 0 17px 17px; color: #aebac7; font-size: 11px; line-height: 1.8; }
 .django-mark { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; }
 .django-copy-card, .django-tip, .django-takeaway { border: 1px solid var(--line); border-radius: 12px; background: rgba(17, 30, 46, .58); }
 .django-copy-card { padding: 22px 24px; border-left: 2px solid var(--subject-accent); }
