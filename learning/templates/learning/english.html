@@ -5,56 +5,78 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08121f">
-  <title>English Study — Study Hub</title>
+  <meta name="description" content="Learn English through reading, writing, language, and examples.">
+  <title>Learn English — Study Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'learning/style.css' %}">
 </head>
-<body>
+<body class="resource-page resource-page--english">
   <div class="page-glow" aria-hidden="true"></div>
   <header class="site-header">
-    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home">
-      <span class="brand-mark" aria-hidden="true">✳</span>
-      <span>Study<span class="brand-light">Hub</span></span>
-    </a>
-    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 PRACTICE <span aria-hidden="true">↗</span></a>
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
   </header>
 
-  <main class="science-main subject-main">
-    <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Back to all subjects</a>
-    <section class="science-panel subject-panel subject-panel--english" aria-labelledby="english-title">
-      <div class="science-panel-copy subject-panel-copy">
-        <p class="eyebrow eyebrow--english"><span class="eyebrow-line"></span> SUBJECT 03 · WORDS AND IDEAS</p>
-        <h1 id="english-title">Find the<br><span>right words.</span></h1>
-        <p class="science-welcome">Welcome to English Study. Reading helps us discover new ideas, and writing helps us share our own. Explore a story, shape a sentence, and make your meaning clear.</p>
-        <p class="science-meta">READ CLOSELY · WRITE CLEARLY · KEEP YOUR VOICE</p>
-      </div>
-      <div class="science-art subject-art subject-art--english" aria-hidden="true">
-        <span class="science-orbit"></span>
-        <span class="science-orbit science-orbit--wide"></span>
-        <span class="science-sun">Aa</span>
-        <span class="science-planet">“</span>
+  <main class="resource-main">
+    <nav class="resource-breadcrumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Study Hub</a><span aria-hidden="true">/</span><span>English</span></nav>
+    <section class="resource-hero" aria-labelledby="english-title">
+      <div class="resource-subject-icon" aria-hidden="true">Aa</div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> READ CLOSELY · WRITE CLEARLY · FIND YOUR VOICE</p>
+      <h1 id="english-title">Explore ideas<br><span>with words.</span></h1>
+      <p>English helps us understand what we read and share what we think. Look for clues in a text, shape your ideas, and choose words that help your reader understand.</p>
+    </section>
+
+    <nav class="resource-jump" aria-label="On this page">
+      <a href="#english-basics"><span>01</span> Key ideas</a><a href="#english-reading"><span>02</span> Reading</a><a href="#english-writing"><span>03</span> Writing</a><a href="#english-facts"><span>04</span> More to explore</a>
+    </nav>
+
+    <section class="resource-section" id="english-basics" aria-labelledby="english-basics-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> THE TOOLS OF ENGLISH</p><h2 id="english-basics-title">Key ideas</h2></div>
+      <div class="note-grid">
+        <article class="note-card"><span class="note-card-number">01</span><p><strong>Reading</strong> means making sense of words and thinking about the ideas they share.</p></article>
+        <article class="note-card"><span class="note-card-number">02</span><p><strong>Writing</strong> organises your ideas so another person can follow them.</p></article>
+        <article class="note-card"><span class="note-card-number">03</span><p><strong>Vocabulary</strong> is the collection of words you know and choose from.</p></article>
+        <article class="note-card"><span class="note-card-number">04</span><p><strong>Punctuation</strong> helps show where ideas pause, finish, or ask a question.</p></article>
       </div>
     </section>
 
-    <section class="study-section" aria-labelledby="english-topics-title">
-      <div class="study-heading">
-        <div><p class="eyebrow eyebrow--english"><span class="eyebrow-line"></span> PICK A PLACE TO START</p><h2 id="english-topics-title">Explore with words</h2></div>
-        <span class="study-heading-note">THREE STARTER TOPICS</span>
+    <section class="article-section" id="english-reading" aria-labelledby="english-reading-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> BE A TEXT DETECTIVE</p><h2 id="english-reading-title">How to understand what you read</h2></div>
+      <div class="article-card"><span class="article-kicker">NOTICE · INFER · FIND EVIDENCE</span><p>Start by asking what the text is mostly about. Then notice details that support your thinking. Sometimes a writer does not say everything directly; you can make an <strong>inference</strong> by combining clues in the text with what you already know. Use a specific detail as evidence for your idea.</p></div>
+      <div class="django-cards english-example-grid">
+        <article class="django-card"><span class="django-card-number">MAIN IDEA</span><h3>What is mostly happening?</h3><p>Look for an idea that connects several details, rather than focusing on just one small fact.</p></article>
+        <article class="django-card"><span class="django-card-number">INFERENCE</span><h3>What can you work out?</h3><p>Clues: “Ari zipped his coat and hurried inside as the first drops fell.” Ari may be trying to get out of the rain.</p></article>
+        <article class="django-card"><span class="django-card-number">EVIDENCE</span><h3>Which words support it?</h3><p>“The first drops fell” is a clue for rain; “hurried inside” suggests Ari wants shelter.</p></article>
+        <article class="django-card"><span class="django-card-number">VOCABULARY</span><h3>Use nearby clues</h3><p>If an unfamiliar word appears, read the surrounding sentence for hints about its meaning.</p></article>
       </div>
-      <div class="topic-grid">
-        <article class="topic-card topic-card--english"><span class="topic-number">01 / READING</span><h3>Look for clues</h3><p>Find the main idea, notice details, and use evidence to understand a text.</p></article>
-        <article class="topic-card topic-card--english"><span class="topic-number">02 / WRITING</span><h3>Shape your ideas</h3><p>Plan a beginning, middle, and ending so your thoughts are easy to follow.</p></article>
-        <article class="topic-card topic-card--english"><span class="topic-number">03 / LANGUAGE</span><h3>Choose your words</h3><p>Explore vocabulary, punctuation, and the small choices that make meaning clear.</p></article>
-      </div>
-      <details class="practice-card practice-card--english">
-        <summary><span class="practice-label">READING WARM-UP</span><span>What can you infer from this short scene?</span><span class="practice-toggle" aria-hidden="true">+</span></summary>
-        <div class="reading-prompt"><p>“The rain stopped just before sunset. Maya stepped into the garden and carefully lifted a small blue notebook from beneath the bench.”</p><p>Why might Maya lift the notebook carefully?</p><p><strong>One possible answer:</strong> She may be trying not to damage it. The word “carefully” is a clue about how she handles the notebook.</p></div>
-      </details>
+      <details class="practice-card practice-card--english"><summary><span class="practice-label">YOUR TURN</span><span>What can you infer from this scene?</span><span class="practice-toggle" aria-hidden="true">+</span></summary><div class="reading-prompt"><p>“The match was almost over. Sam kept glancing at the scoreboard and bouncing one knee.”</p><p><strong>One possible answer:</strong> Sam may feel nervous or excited. The repeated glances and bouncing knee are clues, but the text does not tell us for certain.</p></div></details>
     </section>
+
+    <section class="resource-section" id="english-writing" aria-labelledby="english-writing-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> MAKE YOUR IDEAS EASY TO FOLLOW</p><h2 id="english-writing-title">How to build a clear paragraph</h2></div>
+      <div class="django-cards english-example-grid">
+        <article class="django-card"><span class="django-card-number">01 / POINT</span><h3>Say your main idea</h3><p>Let the reader know what the paragraph is about.</p></article>
+        <article class="django-card"><span class="django-card-number">02 / DETAIL</span><h3>Add an example</h3><p>Include a fact, description, or moment that supports your point.</p></article>
+        <article class="django-card"><span class="django-card-number">03 / EXPLAIN</span><h3>Show why it matters</h3><p>Connect your detail back to your main idea.</p></article>
+        <article class="django-card"><span class="django-card-number">04 / CHECK</span><h3>Read it again</h3><p>Check spelling, punctuation, and whether the ideas are in a helpful order.</p></article>
+      </div>
+      <div class="article-card english-paragraph-example"><span class="article-kicker">A SHORT EXAMPLE</span><p><strong>Point:</strong> A school garden can be a useful place to learn.<br><strong>Detail:</strong> Students can watch seeds grow and measure the plants each week.<br><strong>Explain:</strong> This connects science observations with maths and careful writing.</p></div>
+    </section>
+
+    <section class="resource-section" id="english-facts" aria-labelledby="english-facts-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> EXTRA THINGS TO KNOW</p><h2 id="english-facts-title">Words do a lot of work</h2></div>
+      <div class="note-grid">
+        <article class="note-card"><span class="note-card-number">01</span><p>A <strong>noun</strong> names a person, place, thing, or idea. A <strong>verb</strong> tells what happens or what something is.</p></article>
+        <article class="note-card"><span class="note-card-number">02</span><p>An <strong>adjective</strong> describes a noun; an <strong>adverb</strong> can describe how an action happens.</p></article>
+        <article class="note-card"><span class="note-card-number">03</span><p>The same story can sound funny, serious, or mysterious depending on the writer's word choices.</p></article>
+        <article class="note-card"><span class="note-card-number">04</span><p>Reading different kinds of texts is a good way to meet new words and writing styles.</p></article>
+      </div>
+      <div class="django-takeaway"><span aria-hidden="true">✦</span><p><strong>Remember:</strong> good readers look for clues, and good writers organise ideas for their reader.</p></div>
+    </section>
+    <div class="resource-bottom-nav"><a href="{% url 'home' %}">← Back to all subjects</a><a href="{% url 'learning_library' %}">Explore the year library →</a></div>
   </main>
-
   <footer class="site-footer"><span>STUDY HUB / ENGLISH</span><span>Words open new worlds.</span></footer>
 </body>
 </html>

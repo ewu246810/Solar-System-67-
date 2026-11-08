@@ -5,56 +5,72 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08121f">
-  <title>Maths Study — Study Hub</title>
+  <meta name="description" content="Learn useful maths ideas with clear notes, examples, and practice.">
+  <title>Learn Maths — Study Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'learning/style.css' %}">
 </head>
-<body>
+<body class="resource-page resource-page--maths">
   <div class="page-glow" aria-hidden="true"></div>
   <header class="site-header">
-    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home">
-      <span class="brand-mark" aria-hidden="true">✳</span>
-      <span>Study<span class="brand-light">Hub</span></span>
-    </a>
-    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 PRACTICE <span aria-hidden="true">↗</span></a>
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
   </header>
 
-  <main class="science-main subject-main">
-    <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Back to all subjects</a>
-    <section class="science-panel subject-panel subject-panel--maths" aria-labelledby="maths-title">
-      <div class="science-panel-copy subject-panel-copy">
-        <p class="eyebrow eyebrow--maths"><span class="eyebrow-line"></span> SUBJECT 02 · NUMBERS AND PATTERNS</p>
-        <h1 id="maths-title">Maths, made<br><span>one step at a time.</span></h1>
-        <p class="science-welcome">Welcome to Maths Study. Maths helps us spot patterns, solve puzzles, and make sense of everyday things. Start with one idea, then build your confidence from there.</p>
-        <p class="science-meta">NOTICE A PATTERN · TRY A METHOD · CHECK YOUR ANSWER</p>
-      </div>
-      <div class="science-art subject-art subject-art--maths" aria-hidden="true">
-        <span class="science-orbit"></span>
-        <span class="science-orbit science-orbit--wide"></span>
-        <span class="science-sun">∑</span>
-        <span class="science-planet">π</span>
+  <main class="resource-main">
+    <nav class="resource-breadcrumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Study Hub</a><span aria-hidden="true">/</span><span>Maths</span></nav>
+    <section class="resource-hero" aria-labelledby="maths-title">
+      <div class="resource-subject-icon" aria-hidden="true">∑</div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> LEARN BY NOTICING, TRYING, AND CHECKING</p>
+      <h1 id="maths-title">Maths, one step<br><span>at a time.</span></h1>
+      <p>Maths helps us describe patterns, compare amounts, and solve problems. Start with an idea, look at an example, then have a go yourself.</p>
+    </section>
+
+    <nav class="resource-jump" aria-label="On this page">
+      <a href="#maths-basics"><span>01</span> Key ideas</a><a href="#maths-methods"><span>02</span> How to solve</a><a href="#maths-examples"><span>03</span> Examples</a><a href="#maths-facts"><span>04</span> More to explore</a>
+    </nav>
+
+    <section class="resource-section" id="maths-basics" aria-labelledby="maths-basics-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> START WITH THE BUILDING BLOCKS</p><h2 id="maths-basics-title">Key maths ideas</h2></div>
+      <div class="note-grid">
+        <article class="note-card"><span class="note-card-number">01</span><p><strong>Numbers</strong> tell us how many, how much, or where something belongs in an order.</p></article>
+        <article class="note-card"><span class="note-card-number">02</span><p><strong>Fractions</strong> describe equal parts of a whole. In ¾, the 4 names the number of equal parts.</p></article>
+        <article class="note-card"><span class="note-card-number">03</span><p><strong>Operations</strong> such as addition, subtraction, multiplication, and division are ways to work with numbers.</p></article>
+        <article class="note-card"><span class="note-card-number">04</span><p><strong>Algebra</strong> uses a letter, such as <code>x</code>, to stand for a number we do not know yet.</p></article>
       </div>
     </section>
 
-    <section class="study-section" aria-labelledby="maths-topics-title">
-      <div class="study-heading">
-        <div><p class="eyebrow eyebrow--maths"><span class="eyebrow-line"></span> PICK A PLACE TO START</p><h2 id="maths-topics-title">Maths, step by step</h2></div>
-        <span class="study-heading-note">THREE STARTER TOPICS</span>
+    <section class="article-section" id="maths-methods" aria-labelledby="maths-methods-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> A USEFUL WAY TO THINK</p><h2 id="maths-methods-title">How to solve a maths problem</h2></div>
+      <div class="article-card"><span class="article-kicker">READ · CHOOSE · WORK · CHECK</span><p>First, read the question and decide what it is asking. Choose a method that matches the problem, then show each step so you can follow your thinking. At the end, check whether your answer makes sense. If you are finding part of a group, your answer should not be bigger than the whole group.</p></div>
+      <div class="django-cards maths-example-grid">
+        <article class="django-card"><span class="django-card-number">FRACTIONS</span><h3>Find ¾ of 20</h3><p>Split 20 into 4 equal groups: 20 ÷ 4 = 5. Take 3 groups: 5 × 3 = <strong>15</strong>.</p></article>
+        <article class="django-card"><span class="django-card-number">PERCENTAGES</span><h3>Find 25% of 80</h3><p>25% is the same as one quarter. One quarter of 80 is 80 ÷ 4 = <strong>20</strong>.</p></article>
+        <article class="django-card"><span class="django-card-number">ALGEBRA</span><h3>Solve x + 7 = 12</h3><p>Undo adding 7 by subtracting 7 from both sides. Then x = 12 − 7, so <strong>x = 5</strong>.</p></article>
+        <article class="django-card"><span class="django-card-number">GEOMETRY</span><h3>Find a rectangle’s area</h3><p>Multiply its length by its width. A 6 cm by 3 cm rectangle has area 6 × 3 = <strong>18 cm²</strong>.</p></article>
       </div>
-      <div class="topic-grid">
-        <article class="topic-card topic-card--maths"><span class="topic-number">01 / NUMBER SENSE</span><h3>Fractions & percentages</h3><p>Compare parts of a whole and see how fractions, decimals, and percentages connect.</p></article>
-        <article class="topic-card topic-card--maths"><span class="topic-number">02 / ALGEBRA</span><h3>Find the unknown</h3><p>Use letters to stand for missing numbers and learn how to balance an equation.</p></article>
-        <article class="topic-card topic-card--maths"><span class="topic-number">03 / GEOMETRY</span><h3>Shapes & space</h3><p>Explore angles, area, and the shapes you can find all around you.</p></article>
-      </div>
-      <details class="practice-card practice-card--maths">
-        <summary><span class="practice-label">QUICK WARM-UP</span><span>What is 25% of 80?</span><span class="practice-toggle" aria-hidden="true">+</span></summary>
-        <p><strong>Answer: 20.</strong> 25% is one quarter. One quarter of 80 is 80 ÷ 4 = 20.</p>
-      </details>
+      <details class="practice-card practice-card--maths"><summary><span class="practice-label">YOUR TURN</span><span>What is 10% of 70?</span><span class="practice-toggle" aria-hidden="true">+</span></summary><p><strong>Answer: 7.</strong> Ten per cent means 10 out of every 100, or one tenth. One tenth of 70 is 70 ÷ 10 = 7.</p></details>
     </section>
+
+    <section class="resource-section" id="maths-examples" aria-labelledby="maths-examples-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> NOTICE THE CONNECTIONS</p><h2 id="maths-examples-title">One idea can have different forms</h2><p>A fraction, decimal, and percentage can describe the same amount.</p></div>
+      <div class="article-card"><span class="article-kicker">SAME VALUE, THREE WAYS</span><p><strong>½ = 0.5 = 50%</strong>. The fraction ½ means one part out of two equal parts. Dividing 1 by 2 gives the decimal 0.5. As a percentage, 0.5 of a whole is 50 out of 100, or 50%.</p></div>
+    </section>
+
+    <section class="resource-section" id="maths-facts" aria-labelledby="maths-facts-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> EXTRA THINGS TO KNOW</p><h2 id="maths-facts-title">Maths around you</h2></div>
+      <div class="note-grid">
+        <article class="note-card"><span class="note-card-number">01</span><p>Recipes use fractions to measure ingredients, and changing the number of servings uses multiplication.</p></article>
+        <article class="note-card"><span class="note-card-number">02</span><p>Maps use scale to show large distances in a smaller space.</p></article>
+        <article class="note-card"><span class="note-card-number">03</span><p>Negative numbers can describe temperatures below zero or money owed.</p></article>
+        <article class="note-card"><span class="note-card-number">04</span><p>Estimating first can help you spot an answer that is far too large or too small.</p></article>
+      </div>
+      <div class="django-takeaway"><span aria-hidden="true">✦</span><p><strong>Remember:</strong> choose a method, show your steps, and check that your answer fits the question.</p></div>
+    </section>
+    <div class="resource-bottom-nav"><a href="{% url 'home' %}">← Back to all subjects</a><a href="{% url 'learning_library' %}">Explore the year library →</a></div>
   </main>
-
   <footer class="site-footer"><span>STUDY HUB / MATHS</span><span>Small steps add up.</span></footer>
 </body>
 </html>

@@ -5,44 +5,78 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08121f">
-  <title>Science Study — Study Hub</title>
+  <meta name="description" content="Learn about science, evidence, space, and our solar system.">
+  <title>Learn Science — Study Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'learning/style.css' %}">
 </head>
-<body>
+<body class="resource-page resource-page--science">
   <div class="page-glow" aria-hidden="true"></div>
   <header class="site-header">
-    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home">
-      <span class="brand-mark" aria-hidden="true">✳</span>
-      <span>Study<span class="brand-light">Hub</span></span>
-    </a>
-    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 PRACTICE <span aria-hidden="true">↗</span></a>
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
   </header>
 
-  <main class="science-main">
-    <a class="back-link" href="{% url 'home' %}"><span aria-hidden="true">←</span> Back to all subjects</a>
-    <section class="science-panel" aria-labelledby="science-title">
-      <div class="science-panel-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> SUBJECT 01 · THE NATURAL WORLD</p>
-        <h1 id="science-title">Science<br><span>starts with a question.</span></h1>
-        <p class="science-welcome">Welcome to Science Study. Begin with our solar system: the Sun, eight planets, and countless smaller worlds sharing one cosmic neighbourhood. Take a look around and see what you discover.</p>
-        <p class="science-meta">OUR COSMIC NEIGHBOURHOOD · 8 PLANETS · COUNTLESS THINGS TO DISCOVER</p>
-        <a class="primary-link science-link" href="{% url 'solar_system' %}">
-          <span>Open the 3D solar system</span>
-          <span class="arrow-circle" aria-hidden="true">↗</span>
-        </a>
-      </div>
-      <div class="science-art" aria-hidden="true">
-        <span class="science-orbit"></span>
-        <span class="science-orbit science-orbit--wide"></span>
-        <span class="science-sun"></span>
-        <span class="science-planet"></span>
+  <main class="resource-main">
+    <nav class="resource-breadcrumbs" aria-label="Breadcrumb"><a href="{% url 'home' %}">Study Hub</a><span aria-hidden="true">/</span><span>Science</span></nav>
+    <section class="resource-hero science-hero" aria-labelledby="science-title">
+      <div class="resource-subject-icon" aria-hidden="true">✳</div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> ASK QUESTIONS · LOOK FOR EVIDENCE · KEEP EXPLORING</p>
+      <h1 id="science-title">Science starts<br><span>with a question.</span></h1>
+      <p>Science is a way to learn about the natural world. We make observations, ask questions, gather evidence, and use that evidence to explain what we notice.</p>
+    </section>
+
+    <nav class="resource-jump" aria-label="On this page">
+      <a href="#science-basics"><span>01</span> Key ideas</a><a href="#science-method"><span>02</span> How science works</a><a href="#solar-system-guide"><span>03</span> Solar system</a><a href="#science-facts"><span>04</span> More to explore</a>
+    </nav>
+
+    <section class="resource-section" id="science-basics" aria-labelledby="science-basics-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> A FEW USEFUL STARTING POINTS</p><h2 id="science-basics-title">Key science ideas</h2></div>
+      <div class="note-grid">
+        <article class="note-card"><span class="note-card-number">01</span><p><strong>Observation:</strong> something you notice using your senses or a tool, such as a thermometer.</p></article>
+        <article class="note-card"><span class="note-card-number">02</span><p><strong>Evidence:</strong> information you collect that can help answer a question.</p></article>
+        <article class="note-card"><span class="note-card-number">03</span><p><strong>Prediction:</strong> a reasoned idea about what might happen, which you can investigate.</p></article>
+        <article class="note-card"><span class="note-card-number">04</span><p><strong>Model:</strong> a useful way to represent something that may be too large, small, or complex to see all at once.</p></article>
       </div>
     </section>
-  </main>
 
+    <section class="article-section" id="science-method" aria-labelledby="science-method-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> FROM CURIOSITY TO EVIDENCE</p><h2 id="science-method-title">How a science investigation works</h2></div>
+      <div class="article-card"><span class="article-kicker">ASK · PREDICT · INVESTIGATE · EXPLAIN</span><p>Start with a question you can explore. Make a prediction and decide what you will observe or measure. Record what happens, then compare the evidence with your prediction. Your results may support your idea, change it, or lead to a new question. A good investigation is careful and fair, and other people should be able to understand what you did.</p></div>
+      <div class="django-cards science-example-grid">
+        <article class="django-card"><span class="django-card-number">QUESTION</span><h3>Does light affect plant growth?</h3><p>Ask a question that can be explored by observing plants over time.</p></article>
+        <article class="django-card"><span class="django-card-number">FAIR TEST</span><h3>Change one thing</h3><p>Compare plants in different light while keeping other conditions as similar as you can.</p></article>
+        <article class="django-card"><span class="django-card-number">OBSERVE</span><h3>Record what happens</h3><p>Measure or describe the plants regularly. Notes and measurements are evidence.</p></article>
+        <article class="django-card"><span class="django-card-number">EXPLAIN</span><h3>Use the evidence</h3><p>Describe what your observations suggest, and mention anything that could affect the result.</p></article>
+      </div>
+    </section>
+
+    <section class="resource-section" id="solar-system-guide" aria-labelledby="solar-system-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> OUR COSMIC NEIGHBOURHOOD</p><h2 id="solar-system-title">A quick guide to the solar system</h2><p>The Sun and the objects held by its gravity make up our solar system.</p></div>
+      <div class="article-card"><span class="article-kicker">ONE STAR · EIGHT PLANETS · MANY SMALLER WORLDS</span><p>The Sun is a star at the centre of our solar system. In order from the Sun, the eight planets are <strong>Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune</strong>. The inner four are rocky planets; Jupiter and Saturn are gas giants, while Uranus and Neptune are ice giants. Planets travel around the Sun in paths called orbits.</p></div>
+      <div class="django-cards science-example-grid">
+        <article class="django-card"><span class="django-card-number">THE SUN</span><h3>A star, not a planet</h3><p>It gives Earth most of the light and heat that make life here possible.</p></article>
+        <article class="django-card"><span class="django-card-number">EARTH</span><h3>Our home planet</h3><p>Earth has liquid water on its surface and supports a great variety of life.</p></article>
+        <article class="django-card"><span class="django-card-number">THE MOON</span><h3>Earth's natural satellite</h3><p>It travels around Earth. A moon is a natural object that orbits a planet.</p></article>
+        <article class="django-card"><span class="django-card-number">DWARF PLANETS</span><h3>Smaller worlds, too</h3><p>Pluto is a dwarf planet in the Kuiper Belt beyond Neptune.</p></article>
+      </div>
+      <a class="primary-link science-link" href="{% url 'solar_system' %}"><span>Explore the interactive 3D solar system</span><span class="arrow-circle" aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="resource-section" id="science-facts" aria-labelledby="science-facts-title">
+      <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> EXTRA THINGS TO KNOW</p><h2 id="science-facts-title">Science is all around us</h2></div>
+      <div class="note-grid">
+        <article class="note-card"><span class="note-card-number">01</span><p>Plants use light energy, water, and carbon dioxide to make sugars through photosynthesis.</p></article>
+        <article class="note-card"><span class="note-card-number">02</span><p>Many materials change when heated or cooled. Water can be a solid, liquid, or gas.</p></article>
+        <article class="note-card"><span class="note-card-number">03</span><p>Gravity pulls objects toward one another. Earth's gravity keeps us on the ground and the Moon in orbit.</p></article>
+        <article class="note-card"><span class="note-card-number">04</span><p>Scientific explanations can improve when people collect new evidence and check earlier ideas.</p></article>
+      </div>
+      <div class="django-takeaway"><span aria-hidden="true">✦</span><p><strong>Remember:</strong> science grows from careful questions, observations, and evidence.</p></div>
+    </section>
+    <div class="resource-bottom-nav"><a href="{% url 'home' %}">← Back to all subjects</a><a href="{% url 'learning_library' %}">Explore the year library →</a></div>
+  </main>
   <footer class="site-footer"><span>STUDY HUB / SCIENCE</span><span>Keep asking questions.</span></footer>
 </body>
 </html>

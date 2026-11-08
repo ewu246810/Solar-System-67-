@@ -209,6 +209,9 @@ a.subject-card--english:hover { border-color: rgba(198, 169, 255, .4); }
 .resource-page--maths { --subject-accent: #f2c479; }
 .resource-page--english { --subject-accent: #c6a9ff; }
 .resource-page--django { --subject-accent: #9bdfaa; }
+.resource-page--maths .resource-hero h1 span,
+.resource-page--english .resource-hero h1 span,
+.resource-page--science .resource-hero h1 span { color: var(--subject-accent); }
 .subject-icon--django { color: #9bdfaa; font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500; }
 .subject-card--django .card-status .status-dot { background: #9bdfaa; box-shadow: 0 0 12px rgba(155, 223, 170, .55); }
 .subject-card--django .card-arrow { color: #9bdfaa; }
