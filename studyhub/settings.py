@@ -45,6 +45,10 @@ ALLOWED_HOSTS.extend(host for host in vercel_hosts if host not in ALLOWED_HOSTS)
 CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in vercel_hosts]
 CSRF_TRUSTED_ORIGINS.append('https://solar-system-67.vercel.app')
 
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 # Application definition
 

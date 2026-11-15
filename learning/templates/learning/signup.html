@@ -1,0 +1,36 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Sign up — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body class="resource-page auth-page">
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'home' %}">BACK TO STUDY HUB <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="auth-main">
+    <section class="auth-card" aria-labelledby="signup-title">
+      <div class="resource-subject-icon auth-icon" aria-hidden="true">✦</div>
+      <p class="eyebrow"><span class="eyebrow-line"></span> START YOUR LEARNING JOURNEY</p>
+      <h1 id="signup-title">Create your<br><span>student account.</span></h1>
+      <p class="auth-intro">Choose a username and password to get started.</p>
+      <form method="post" class="auth-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="auth-submit">Create account <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="auth-switch">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    </section>
+  </main>
+  <footer class="site-footer"><span>STUDY HUB / STUDENT ACCOUNT</span><span>Every big idea starts somewhere.</span></footer>
+</body>
+</html>

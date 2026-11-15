@@ -18,7 +18,18 @@
       <span class="brand-mark" aria-hidden="true">✳</span>
       <span>Study<span class="brand-light">Hub</span></span>
     </a>
-    <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
+    <div class="header-actions">
+      <nav class="account-nav" aria-label="Student account">
+        {% if user.is_authenticated %}
+          <span class="account-greeting">Hi, <strong>{{ user.username }}</strong></span>
+          <form action="{% url 'logout' %}" method="post" class="account-form">{% csrf_token %}<button type="submit" class="account-link">Log out</button></form>
+        {% else %}
+          <a class="account-link" href="{% url 'login' %}">Log in</a>
+          <a class="account-link account-link--highlight" href="{% url 'signup' %}">Sign up</a>
+        {% endif %}
+      </nav>
+      <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>
+    </div>
   </header>
 
   <main class="home-main">

@@ -1,6 +1,8 @@
 from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.http import FileResponse, Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .content import SUBJECTS, YEAR_CONTENT, year_band
@@ -54,6 +56,19 @@ def home(request):
         'subjects': subjects,
         'ready_count': ready_count,
     })
+
+
+def signup(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    form = UserCreationForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        user = form.save()
+        login(request, user)
+        return redirect('home')
+
+    return render(request, 'learning/signup.html', {'form': form})
 
 
 def science(request):
