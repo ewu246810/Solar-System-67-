@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,11 +23,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-s6!j@-6!uu_yq3g_6*by!ac22n)&07zlmfdmc0)@_g+72qbghb'
+IS_VERCEL = bool(os.environ.get('VERCEL'))
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Production secrets belong in the host's environment settings, not source control.
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if IS_VERCEL:
+        raise ImproperlyConfigured('Set DJANGO_SECRET_KEY in the Vercel project environment.')
+    SECRET_KEY = 'django-insecure-local-development-only-key'
+
+# Keep helpful error pages locally, but never expose debug tracebacks on Vercel.
+debug_value = os.environ.get('DJANGO_DEBUG', 'false' if IS_VERCEL else 'true')
+DEBUG = debug_value.strip().lower() in {'1', 'true', 'yes', 'on'}
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'solar-system-67.vercel.app']
 
@@ -53,7 +63,6 @@ LOGOUT_REDIRECT_URL = '/'
 # Application definition
 
 INSTALLED_APPS = [
-    'learning.apps.LearningConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,15 +101,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'studyhub.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Use a persistent PostgreSQL database when DATABASE_URL is provided by the
+# hosting environment. Keep SQLite as the simple local-development default.
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    default_database = dj_database_url.parse(database_url, conn_max_age=0)
+    if default_database['ENGINE'] == 'django.db.backends.postgresql':
+        default_database.setdefault('OPTIONS', {}).setdefault('sslmode', 'require')
+    DATABASES = {'default': default_database}
+elif IS_VERCEL:
+    raise ImproperlyConfigured('Set DATABASE_URL to a persistent PostgreSQL database in Vercel.')
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
 
 
 # Password validation
