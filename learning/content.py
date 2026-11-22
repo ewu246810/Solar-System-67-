@@ -26,9 +26,7 @@ def lesson(topic, notes, article, questions):
     }
 
 
-# Each year and subject has its own notes, short article, and three-question
-# quiz. Add a subject to SUBJECTS and give it a lesson for each year to extend
-# the library.
+# Each year and subject has its own notes, short article, and question bank.
 YEAR_CONTENT = {
     1: {
         'maths': lesson('Counting and adding',
@@ -307,6 +305,75 @@ YEAR_CONTENT = {
             ]),
     },
 }
+
+# An extra question for every year and subject gives each quiz a larger pool.
+# The page selects three from each four-question bank on every visit.
+EXTRA_QUESTIONS = {
+    1: {
+        'maths': question('What is 5 + 2?', ['6', '7', '8'], 1, 'Five counters plus two more makes seven.'),
+        'english': question('Which word starts with the same sound as “moon”?', ['map', 'sun', 'fish'], 0, '“Moon” and “map” both begin with the /m/ sound.'),
+        'science': question('Which part of a plant takes in water from soil?', ['Roots', 'Flower petals', 'Fruit'], 0, 'Roots absorb water and anchor the plant.'),
+    },
+    2: {
+        'maths': question('What is 50 + 9?', ['59', '509', '95'], 0, 'Five tens and nine ones make 59.'),
+        'english': question('Which word names an action?', ['sleep', 'blue', 'chair'], 0, '“Sleep” is an action word, or verb.'),
+        'science': question('Which material is attracted to a magnet?', ['Iron', 'Paper', 'Wood'], 0, 'Iron is a magnetic metal.'),
+    },
+    3: {
+        'maths': question('There are 5 bags with 2 apples in each. How many apples?', ['7', '10', '12'], 1, 'Five groups of two make 5 × 2 = 10.'),
+        'english': question('Which word describes how a bird sang?', ['sweetly', 'bird', 'sing'], 0, '“Sweetly” describes how the bird sang.'),
+        'science': question('What is water called when it freezes?', ['Ice', 'Steam', 'Rain'], 0, 'Freezing changes liquid water into solid ice.'),
+    },
+    4: {
+        'maths': question('What is one quarter of 20?', ['4', '5', '10'], 1, '20 divided into four equal parts gives 5 in each part.'),
+        'english': question('Which detail is evidence that a character is tired?', ['They yawned and rubbed their eyes', 'They ran a race', 'They ate lunch'], 0, 'Yawning and rubbing eyes are clues of tiredness.'),
+        'science': question('Which animal is a producer in a food chain?', ['Grass', 'Rabbit', 'Fox'], 0, 'Plants such as grass make their own food.'),
+    },
+    5: {
+        'maths': question('What is 0.6 written as a fraction in tenths?', ['6/10', '6/100', '1/6'], 0, 'Six tenths is written 6/10.'),
+        'english': question('Which sentence is written in the past tense?', ['Mia walked home.', 'Mia walks home.', 'Mia will walk home.'], 0, '“Walked” tells us the action already happened.'),
+        'science': question('What is the main source of energy for Earth?', ['The Sun', 'The Moon', 'The ocean'], 0, 'Most energy for Earth’s systems comes from the Sun.'),
+    },
+    6: {
+        'maths': question('A $40 item is discounted by 25%. What is the sale price?', ['$10', '$30', '$35'], 1, '25% of $40 is $10, so the sale price is $30.'),
+        'english': question('What is the purpose of a topic sentence?', ['Introduce a paragraph’s main idea', 'List every source', 'Finish a whole book'], 0, 'A topic sentence signals the main idea of its paragraph.'),
+        'science': question('Which change is reversible?', ['Ice melting', 'Wood burning', 'An egg cooking'], 0, 'Liquid water can be frozen again to make ice.'),
+    },
+    7: {
+        'maths': question('Simplify the ratio 12:18.', ['2:3', '3:2', '6:9'], 0, 'Divide both parts by 6 to get 2:3.'),
+        'english': question('What does a simile usually use to compare things?', ['Like or as', 'Because or so', 'Before or after'], 0, 'Similes compare using words such as “like” or “as”.'),
+        'science': question('Which particle has a negative charge?', ['Electron', 'Proton', 'Neutron'], 0, 'Electrons carry a negative electrical charge.'),
+    },
+    8: {
+        'maths': question('Solve x + 7 = 12.', ['x = 5', 'x = 19', 'x = -5'], 0, 'Subtract 7 from both sides: x = 5.'),
+        'english': question('Which phrase best signals contrast?', ['On the other hand', 'For example', 'As a result'], 0, '“On the other hand” introduces a contrasting point.'),
+        'science': question('What is the role of a decomposer?', ['Break down dead matter', 'Make sunlight', 'Stop all energy transfer'], 0, 'Decomposers recycle nutrients by breaking down dead matter.'),
+    },
+    9: {
+        'maths': question('What is the gradient of y = 4x + 1?', ['1', '4', '5'], 1, 'In y = mx + b, the gradient is the coefficient m = 4.'),
+        'english': question('What is an author’s tone?', ['Their attitude conveyed through the writing', 'The number of pages', 'The list of characters'], 0, 'Tone is the attitude or feeling conveyed by a text.'),
+        'science': question('What is the unit of electrical current?', ['Ampere', 'Volt', 'Watt'], 0, 'Current is measured in amperes (amps).'),
+    },
+    10: {
+        'maths': question('Factorise x² + 5x + 6.', ['(x + 2)(x + 3)', '(x + 1)(x + 6)', '(x - 2)(x - 3)'], 0, 'Two numbers that multiply to 6 and add to 5 are 2 and 3.'),
+        'english': question('What makes a source useful as evidence?', ['It is relevant and trustworthy', 'It is the longest source', 'It agrees with every opinion'], 0, 'Relevant, reliable evidence helps support an argument.'),
+        'science': question('What does a control variable do in an experiment?', ['Stay the same for a fair comparison', 'Change randomly', 'Replace the results'], 0, 'Keeping control variables constant helps isolate the tested factor.'),
+    },
+    11: {
+        'maths': question('What is the mean of 2, 4, and 9?', ['5', '6', '15'], 0, 'The total is 15; divide by 3 values to get a mean of 5.'),
+        'english': question('Why analyse the effect of a writer’s technique?', ['To explain how it shapes meaning or response', 'To count every word', 'To retell the plot only'], 0, 'Analysis connects a choice to its meaning or impact.'),
+        'science': question('What does a catalyst do in a reaction?', ['Speeds it up without being used up', 'Stops all particles moving', 'Becomes the only product'], 0, 'A catalyst increases reaction rate and is not consumed overall.'),
+    },
+    12: {
+        'maths': question('What is the derivative of x²?', ['x', '2x', '2'], 1, 'Using the power rule, d(x²)/dx = 2x.'),
+        'english': question('What is the purpose of a counterargument?', ['Address a different or opposing view', 'Repeat the introduction', 'Add an unrelated detail'], 0, 'A counterargument recognises and responds to another position.'),
+        'science': question('What does a larger sample size usually improve?', ['Reliability of an estimate', 'The certainty that bias is absent', 'The accuracy of every tool'], 0, 'A larger sample can reduce the effect of random variation.'),
+    },
+}
+
+for year, subject_questions in EXTRA_QUESTIONS.items():
+    for subject_slug, extra_question in subject_questions.items():
+        YEAR_CONTENT[year][subject_slug]['questions'].append(extra_question)
 
 
 def year_band(year):

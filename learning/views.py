@@ -1,3 +1,5 @@
+import random
+
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -130,11 +132,17 @@ def year_subject(request, year, subject_slug):
     if subject is None:
         raise Http404('That subject is not in the library.')
 
+    resource = YEAR_CONTENT[year][subject_slug]
+    resource = {
+        **resource,
+        'questions': random.sample(resource['questions'], k=3),
+    }
+
     return render(request, 'learning/year_subject.html', {
         'year': year,
         'band': year_band(year),
         'subject': subject,
-        'resource': YEAR_CONTENT[year][subject_slug],
+        'resource': resource,
     })
 
 
