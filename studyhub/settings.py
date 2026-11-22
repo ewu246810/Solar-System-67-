@@ -36,7 +36,12 @@ if not SECRET_KEY:
 debug_value = os.environ.get('DJANGO_DEBUG', 'false' if IS_VERCEL else 'true')
 DEBUG = debug_value.strip().lower() in {'1', 'true', 'yes', 'on'}
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'solar-system-67.vercel.app']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'solar-system-67.vercel.app',
+    'study-hub-ewu.vercel.app',
+]
 
 # Vercel provides an exact hostname for each deployment. Add those exact
 # domains so preview deployments work without trusting every *.vercel.app site.
@@ -54,6 +59,7 @@ for host_variable in (
 ALLOWED_HOSTS.extend(host for host in vercel_hosts if host not in ALLOWED_HOSTS)
 CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in vercel_hosts]
 CSRF_TRUSTED_ORIGINS.append('https://solar-system-67.vercel.app')
+CSRF_TRUSTED_ORIGINS.append('https://study-hub-ewu.vercel.app')
 
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
