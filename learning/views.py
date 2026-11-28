@@ -20,7 +20,15 @@ from django.utils.text import slugify
 from django.views.decorators.http import require_POST
 
 from .content import SUBJECTS, YEAR_CONTENT, year_band
-from .models import LearnerPet, LearnerProfile, StudyProgress
+from .models import LearnerInventory, LearnerPet, LearnerProfile, StudyProgress
+
+
+SHOP_ITEMS = [
+    {'slug': 'egg_stardust', 'name': 'Stardust Egg', 'price': 100, 'icon': '🥚', 'kind': 'egg', 'description': 'A little mystery egg with a friendly space pet inside.'},
+    {'slug': 'egg_aurora', 'name': 'Aurora Egg', 'price': 200, 'icon': '🌌', 'kind': 'egg', 'description': 'A rare glowing egg that can hatch an aurora companion.'},
+    {'slug': 'pet_treat', 'name': 'Comet Treats', 'price': 25, 'icon': '🍪', 'kind': 'item', 'description': 'A packet of tasty treats for your pet collection.'},
+    {'slug': 'star_collar', 'name': 'Star Collar', 'price': 50, 'icon': '✨', 'kind': 'item', 'description': 'A shiny keepsake for your growing collection.'},
+]
 
 
 def home(request):
@@ -218,11 +226,11 @@ def year_dashboard(request, year):
         raise Http404('That school year is not in the library.')
 
     progress_by_subject = {}
+    quiz_progress_by_subject = {}
     if request.user.is_authenticated:
-        progress_by_subject = {
-            row.subject_slug: row
-            for row in StudyProgress.objects.filter(user=request.user, year=year)
-        }
+        rows = StudyProgress.objects.filter(user=request.user, year=year)
+        progress_by_subject = {row.subject_slug: row for row in rows if row.unit_slug != 'subject-quiz'}
+        quiz_progress_by_subject = {row.subject_slug: row for row in rows if row.unit_slug == 'subject-quiz'}
 
     subjects = []
     for subject in SUBJECTS:
@@ -233,10 +241,11 @@ def year_dashboard(request, year):
             'topic': lesson_data['topic'],
             'url': reverse('year_subject', args=[year, subject['slug']]),
             'progress': progress_by_subject.get(subject['slug']),
+            'quiz_progress': quiz_progress_by_subject.get(subject['slug']),
             'unit_slug': unit_slug,
         })
 
-    completed_count = sum(subject['progress'] is not None for subject in subjects)
+    completed_count = sum(subject['progress'] is not None or subject['quiz_progress'] is not None for subject in subjects)
     profile = LearnerProfile.objects.filter(user=request.user).first() if request.user.is_authenticated else None
 
     return render(request, 'learning/year_dashboard.html', {
@@ -274,6 +283,7 @@ def year_subject(request, year, subject_slug):
         'year': year,
         'subject_slug': subject_slug,
         'unit_slug': unit_slug,
+        'coin_max': 100,
         'questions': [
             {
                 'answer': item['answer'],
@@ -296,6 +306,97 @@ def year_subject(request, year, subject_slug):
         'resource': resource,
         'quiz_id': quiz_id,
         'progress': progress,
+    })
+
+
+@login_required
+def shop(request):
+    profile, _ = LearnerProfile.objects.get_or_create(user=request.user)
+    inventory = {item.item_slug: item.quantity for item in LearnerInventory.objects.filter(user=request.user)}
+    pets = list(LearnerPet.objects.filter(user=request.user))
+    shop_items = []
+    for catalog_item in SHOP_ITEMS:
+        item = {**catalog_item, 'owned': inventory.get(catalog_item['slug'], 0)}
+        if item['kind'] == 'egg':
+            item['owned'] += sum(pet.is_egg and pet.egg_type == item['slug'] for pet in pets)
+        shop_items.append(item)
+    return render(request, 'learning/shop.html', {
+        'profile': profile,
+        'shop_items': shop_items,
+    })
+
+
+@login_required
+@require_POST
+def buy_shop_item(request, item_slug):
+    item = next((item for item in SHOP_ITEMS if item['slug'] == item_slug), None)
+    if item is None:
+        raise Http404('That shop item is not available.')
+    with transaction.atomic():
+        profile, _ = LearnerProfile.objects.select_for_update().get_or_create(user=request.user)
+        if profile.coins < item['price']:
+            messages.error(request, f'You need {item["price"]} coins to buy {item["name"]}.')
+        else:
+            profile.coins -= item['price']
+            profile.save(update_fields=['coins', 'updated_at'])
+            if item['kind'] == 'egg':
+                LearnerPet.objects.create(user=request.user, egg_type=item['slug'])
+            else:
+                inventory_item, _ = LearnerInventory.objects.get_or_create(user=request.user, item_slug=item['slug'])
+                inventory_item.quantity += 1
+                inventory_item.save(update_fields=['quantity', 'updated_at'])
+            messages.success(request, f'{item["name"]} added to your collection.')
+    return redirect('shop')
+
+
+def quizzes(request):
+    selected_year = request.GET.get('year', '')
+    selected_subject = request.GET.get('subject', '')
+    subject = next((item for item in SUBJECTS if item['slug'] == selected_subject), None)
+    try:
+        year = int(selected_year)
+    except (TypeError, ValueError):
+        year = None
+
+    if subject and year in YEAR_CONTENT:
+        questions = random.sample(YEAR_CONTENT[year][subject['slug']]['questions'], k=10)
+        quiz_id = uuid.uuid4().hex
+        request.session[f'study_quiz_{quiz_id}'] = {
+            'user_id': request.user.pk if request.user.is_authenticated else None,
+            'year': year,
+            'subject_slug': subject['slug'],
+            'unit_slug': 'subject-quiz',
+            'coin_max': 150,
+            'questions': [
+                {
+                    'answer': item['answer'],
+                    'answer_text': item['options'][item['answer']],
+                    'explanation': item['explanation'],
+                }
+                for item in questions
+            ],
+        }
+        progress = None
+        if request.user.is_authenticated:
+            progress = StudyProgress.objects.filter(
+                user=request.user, year=year, subject_slug=subject['slug'], unit_slug='subject-quiz',
+            ).first()
+        return render(request, 'learning/quizzes.html', {
+            'quiz_started': True,
+            'year': year,
+            'subject': subject,
+            'questions': questions,
+            'quiz_id': quiz_id,
+            'progress': progress,
+        })
+
+    return render(request, 'learning/quizzes.html', {
+        'quiz_started': False,
+        'subjects': SUBJECTS,
+        'years': sorted(YEAR_CONTENT),
+        'selected_year': year if year in YEAR_CONTENT else selected_year,
+        'selected_subject': selected_subject,
+        'quiz_error': bool(selected_year or selected_subject),
     })
 
 
@@ -362,9 +463,20 @@ def submit_quiz(request):
             previous_best = progress.best_score if progress.question_count == total else 0
             previous_coins = progress.coins_awarded if progress.question_count == total else 0
             best_score = max(previous_best, score)
-            total_coins = max(previous_coins, best_score * 100 // total)
-            coins_earned = total_coins - previous_coins
-            if progress.question_count != total or score > previous_best:
+            coin_max = quiz.get('coin_max', 100)
+            repeatable_reward = quiz['unit_slug'] == 'subject-quiz'
+            if repeatable_reward:
+                coins_earned = score * coin_max // total
+                progress.question_count = total
+                progress.best_score = best_score
+                progress.coins_awarded = best_score * coin_max // total
+                progress.completed_at = timezone.now()
+                progress.save()
+                saved = True
+            else:
+                total_coins = max(previous_coins, best_score * coin_max // total)
+                coins_earned = total_coins - previous_coins
+            if not repeatable_reward and (progress.question_count != total or score > previous_best):
                 progress.question_count = total
                 progress.best_score = best_score
                 progress.coins_awarded = total_coins
@@ -389,11 +501,23 @@ def submit_quiz(request):
 @login_required
 def progress_dashboard(request):
     profile, _ = LearnerProfile.objects.get_or_create(user=request.user)
-    progress_rows = list(StudyProgress.objects.filter(user=request.user))
-    progress_map = {(row.year, row.subject_slug): row for row in progress_rows}
+    progress_rows = list(StudyProgress.objects.filter(user=request.user, year__gt=0))
+    progress_map = {(row.year, row.subject_slug) for row in progress_rows}
     subjects_by_year = len(SUBJECTS)
     total_units = len(YEAR_CONTENT) * subjects_by_year
-    completed_units = len(progress_rows)
+    completed_units = len(progress_map)
+    quiz_summaries = []
+    quiz_rows = StudyProgress.objects.filter(user=request.user, unit_slug='subject-quiz').order_by('year', 'subject_slug')
+    subject_names = {subject['slug']: subject['name'] for subject in SUBJECTS}
+    for row in quiz_rows:
+        quiz_summaries.append({
+            'year': row.year,
+            'subject': subject_names.get(row.subject_slug, row.subject_slug.title()),
+            'score': row.best_score,
+            'total': row.question_count,
+            'coins': row.coins_awarded,
+            'url': reverse('quizzes') + f'?year={row.year}&subject={row.subject_slug}',
+        })
     year_summaries = []
     for year in sorted(YEAR_CONTENT):
         done = sum((year, subject['slug']) in progress_map for subject in SUBJECTS)
@@ -411,6 +535,7 @@ def progress_dashboard(request):
     return render(request, 'learning/progress.html', {
         'profile': profile,
         'year_summaries': year_summaries,
+        'quiz_summaries': quiz_summaries,
         'completed_units': completed_units,
         'total_units': total_units,
         'overall_percent': round(completed_units * 100 / total_units) if total_units else 0,
@@ -438,7 +563,10 @@ def buy_egg(request):
 @require_POST
 def hatch_egg(request, pet_id):
     pet = get_object_or_404(LearnerPet, pk=pet_id, user=request.user, species='')
-    pet.species = random.choice([key for key, _label in LearnerPet.PET_CHOICES])
+    common_pets = {'comet_fox', 'moon_cat', 'cloud_bunny', 'star_owl', 'nebula_axolotl', 'sun_turtle'}
+    rare_pets = {'aurora_dragon', 'crystal_deer', 'ringed_lynx'}
+    hatch_pool = rare_pets if pet.egg_type == 'egg_aurora' else common_pets
+    pet.species = random.choice([key for key, _label in LearnerPet.PET_CHOICES if key in hatch_pool])
     pet.name = dict(LearnerPet.PET_CHOICES)[pet.species]
     pet.hatched_at = timezone.now()
     pet.save(update_fields=['species', 'name', 'hatched_at'])

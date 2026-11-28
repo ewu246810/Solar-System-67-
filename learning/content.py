@@ -634,6 +634,186 @@ for year, subject_questions in MORE_QUESTIONS.items():
         )
 
 
+# A final pair of questions gives each year and subject enough unique items for
+# a full ten-question quiz without repeating a question in one attempt.
+QUIZ_EXTRA_QUESTIONS = {
+    1: {
+        'maths': [
+            ('Which number comes after 16?', '17', '15', '19', 'Counting forward from 16 gives 17.'),
+            ('How many sides does a square have?', '4', '3', '5', 'A square has four straight sides.'),
+        ],
+        'english': [
+            ('Which mark ends a question?', '?', '.', ',', 'A question mark comes at the end of a question.'),
+            ('Which word begins with the same sound as “fish”?', 'fun', 'sun', 'moon', '“Fun” and “fish” both begin with the /f/ sound.'),
+        ],
+        'science': [
+            ('Which one is a non-living thing?', 'A pebble', 'A bird', 'A tree', 'A pebble does not grow or need food.'),
+            ('What do seeds need to start growing?', 'Water', 'Plastic', 'A shadow', 'Seeds need water and suitable conditions to begin growing.'),
+        ],
+    },
+    2: {
+        'maths': [
+            ('What is 6 + 8?', '14', '13', '15', 'Six plus eight equals fourteen.'),
+            ('How many days are in one week?', '7', '5', '10', 'A week has seven days.'),
+        ],
+        'english': [
+            ('Which word is a noun?', 'garden', 'quickly', 'blue', 'A garden is a place, so it is a noun.'),
+            ('Which sentence is a question?', 'Can you help me?', 'I can help you.', 'I helped yesterday.', 'A question asks something and ends with a question mark.'),
+        ],
+        'science': [
+            ('Which material is usually waterproof?', 'Plastic', 'Tissue paper', 'Cotton wool', 'Many plastics do not let water pass through easily.'),
+            ('What do plants use roots to take in?', 'Water', 'Sunlight', 'Sound', 'Roots absorb water from the soil.'),
+        ],
+    },
+    3: {
+        'maths': [
+            ('What is 5 × 5?', '25', '20', '15', 'Five groups of five make 25.'),
+            ('What is 40 ÷ 8?', '5', '4', '8', 'Eight equal groups of 5 make 40.'),
+        ],
+        'english': [
+            ('Which word is a verb?', 'painted', 'yellow', 'window', '“Painted” describes an action.'),
+            ('Which punctuation mark separates items in a list?', 'Comma', 'Question mark', 'Apostrophe', 'Commas can separate items in a list.'),
+        ],
+        'science': [
+            ('What do we call water falling from clouds?', 'Precipitation', 'Evaporation', 'Melting', 'Rain, snow, and hail are forms of precipitation.'),
+            ('Which material is attracted to a magnet?', 'Iron', 'Wood', 'Paper', 'Iron is a magnetic material.'),
+        ],
+    },
+    4: {
+        'maths': [
+            ('What is 9 × 6?', '54', '45', '56', 'Nine groups of six make 54.'),
+            ('What is 3/10 written as a decimal?', '0.3', '3.0', '0.03', 'Three tenths is written as 0.3.'),
+        ],
+        'english': [
+            ('Which word is an adverb in “She spoke softly”?', 'softly', 'spoke', 'she', '“Softly” describes how she spoke.'),
+            ('What is the purpose of a heading?', 'Show what a section is about', 'End every sentence', 'Name every character', 'A heading introduces the topic of a section.'),
+        ],
+        'science': [
+            ('Which force slows objects moving against a surface?', 'Friction', 'Gravity only', 'Magnetism', 'Friction acts between surfaces and can slow motion.'),
+            ('Which organ helps digest food?', 'Stomach', 'Heart', 'Lung', 'The stomach helps break down food.'),
+        ],
+    },
+    5: {
+        'maths': [
+            ('What is 4.25 + 0.5?', '4.75', '4.30', '9.25', 'Write 0.5 as 0.50; 4.25 + 0.50 = 4.75.'),
+            ('How many degrees are in a right angle?', '90°', '45°', '180°', 'A right angle measures 90 degrees.'),
+        ],
+        'english': [
+            ('Which sentence uses a possessive apostrophe?', 'The bird’s nest is high.', 'The birds nest is high.', 'The birds’ is nest high.', 'The apostrophe in “bird’s” shows the nest belongs to the bird.'),
+            ('What is a synonym for “observe”?', 'Notice', 'Forget', 'Hide', 'To observe is to watch or notice carefully.'),
+        ],
+        'science': [
+            ('Which planet is known for its prominent rings?', 'Saturn', 'Mercury', 'Earth', 'Saturn has a broad and visible ring system.'),
+            ('What is the main source of energy for most food chains?', 'The Sun', 'The Moon', 'The ocean floor', 'Most food chains begin with plants capturing energy from sunlight.'),
+        ],
+    },
+    6: {
+        'maths': [
+            ('What is 3/4 written as a percentage?', '75%', '34%', '25%', 'Three quarters is 0.75, or 75%.'),
+            ('What is the perimeter of a 6 cm by 4 cm rectangle?', '20 cm', '24 cm', '10 cm', 'Add all sides: 6 + 4 + 6 + 4 = 20 cm.'),
+        ],
+        'english': [
+            ('What is the main idea of a paragraph?', 'Its most important point', 'Its longest word', 'The page number', 'The main idea is the central point the paragraph develops.'),
+            ('Which phrase signals contrast?', 'On the other hand', 'For example', 'As a result', '“On the other hand” introduces a contrasting idea.'),
+        ],
+        'science': [
+            ('What is the role of a decomposer?', 'Break down dead material', 'Make sunlight', 'Stop all plant growth', 'Decomposers break down dead organisms and recycle nutrients.'),
+            ('Which change is usually reversible?', 'Ice melting', 'Wood burning', 'An egg cooking', 'Liquid water can be frozen again, so melting ice is reversible.'),
+        ],
+    },
+    7: {
+        'maths': [
+            ('What is 3/4 − 1/4?', '1/2', '2/8', '1/4', 'Three quarters minus one quarter is two quarters, or one half.'),
+            ('What is 2³?', '8', '6', '9', 'Two cubed is 2 × 2 × 2 = 8.'),
+        ],
+        'english': [
+            ('What is a simile?', 'A comparison using “like” or “as”', 'A repeated consonant sound', 'A fact from a source', 'Similes compare things using “like” or “as”.'),
+            ('What does an audience mean?', 'The people a text is made for', 'The text’s title', 'The order of paragraphs', 'Audience describes the intended readers or listeners.'),
+        ],
+        'science': [
+            ('What is the chemical symbol for oxygen?', 'O', 'Ox', 'Og', 'O is the chemical symbol for oxygen.'),
+            ('Which part of a plant cell carries out photosynthesis?', 'Chloroplast', 'Nucleus only', 'Cell membrane', 'Chloroplasts contain chlorophyll and capture light energy.'),
+        ],
+    },
+    8: {
+        'maths': [
+            ('Solve 3x = 21.', 'x = 7', 'x = 18', 'x = 24', 'Divide both sides by 3 to get x = 7.'),
+            ('What is the sum of angles in a quadrilateral?', '360°', '180°', '270°', 'The interior angles of any quadrilateral add to 360 degrees.'),
+        ],
+        'english': [
+            ('What is a theme in a story?', 'A central idea explored by the text', 'The list of characters', 'The font used', 'A theme is an important idea that runs through a text.'),
+            ('Which word is a conjunction?', 'although', 'blue', 'quickly', '“Although” joins ideas and signals contrast.'),
+        ],
+        'science': [
+            ('What is the unit of electrical current?', 'Ampere', 'Metre', 'Litre', 'Electric current is measured in amperes (amps).'),
+            ('Which gas do plants take in during photosynthesis?', 'Carbon dioxide', 'Oxygen only', 'Helium', 'Plants use carbon dioxide and water to make sugars.'),
+        ],
+    },
+    9: {
+        'maths': [
+            ('What is the gradient between (0, 1) and (2, 5)?', '2', '4', '3', 'Gradient = (5 − 1) ÷ (2 − 0) = 2.'),
+            ('What is the square root of 144?', '12', '14', '72', '12 × 12 = 144, so the square root is 12.'),
+        ],
+        'english': [
+            ('What is a counterargument?', 'An opposing point of view', 'The opening sentence', 'A list of synonyms', 'A counterargument presents a view that challenges the main claim.'),
+            ('What does “ambiguous” mean?', 'Open to more than one meaning', 'Very loud', 'Clearly measured', 'An ambiguous statement can be understood in multiple ways.'),
+        ],
+        'science': [
+            ('What is the SI unit of energy?', 'Joule', 'Newton', 'Volt', 'Energy is measured in joules.'),
+            ('What is the function of red blood cells?', 'Carry oxygen', 'Digest starch', 'Make hormones', 'Red blood cells carry oxygen around the body.'),
+        ],
+    },
+    10: {
+        'maths': [
+            ('Solve x² = 49 for the positive value of x.', '7', '14', '24.5', 'The positive square root of 49 is 7.'),
+            ('What is sin(30°)?', '1/2', '√3/2', '1', 'In a 30°–60°–90° triangle, sin(30°) = 1/2.'),
+        ],
+        'english': [
+            ('What is an allusion?', 'A brief reference to another text or idea', 'A type of comma', 'A summary of every chapter', 'An allusion points to another work, person, event, or idea.'),
+            ('What is the purpose of a thesis statement?', 'State the main argument', 'List every source', 'Introduce a minor detail', 'A thesis statement presents the central claim of an essay.'),
+        ],
+        'science': [
+            ('What is the pH of a neutral solution at room temperature?', '7', '1', '14', 'A neutral solution has a pH of 7.'),
+            ('What is acceleration?', 'Change in velocity over time', 'Distance only', 'Mass multiplied by volume', 'Acceleration describes how velocity changes over time.'),
+        ],
+    },
+    11: {
+        'maths': [
+            ('What is the derivative of x²?', '2x', 'x', '2', 'Using the power rule, d(x²)/dx = 2x.'),
+            ('What is the probability of rolling a 6 on a fair die?', '1/6', '1/2', '5/6', 'There is one successful outcome among six equally likely outcomes.'),
+        ],
+        'english': [
+            ('What is an unreliable narrator?', 'A narrator whose account may not be trusted', 'A narrator who never speaks', 'A text without a setting', 'An unreliable narrator may misunderstand, omit, or distort events.'),
+            ('What does “juxtaposition” do?', 'Places ideas side by side for comparison', 'Removes the conclusion', 'Repeats a rhyme scheme', 'Juxtaposition highlights contrasts or connections by placing ideas together.'),
+        ],
+        'science': [
+            ('What is the SI unit of power?', 'Watt', 'Joule', 'Kilogram', 'Power is measured in watts.'),
+            ('What does DNA carry?', 'Genetic instructions', 'Electrical current', 'Digested food', 'DNA stores genetic information used by cells.'),
+        ],
+    },
+    12: {
+        'maths': [
+            ('What is the derivative of 5x?', '5', '5x²', 'x', 'The derivative of a linear function 5x is its gradient, 5.'),
+            ('If events A and B are independent, what is P(A and B)?', 'P(A) × P(B)', 'P(A) + P(B)', 'P(A) − P(B)', 'For independent events, multiply their probabilities.'),
+        ],
+        'english': [
+            ('What is synthesis in an essay?', 'Combining sources to develop an insight', 'Copying one source', 'Listing quotations without links', 'Synthesis connects evidence from multiple sources to support a reasoned point.'),
+            ('What does “register” describe?', 'Language suited to a context', 'The number of pages', 'A story’s plot twist', 'Register is the style of language chosen for audience and situation.'),
+        ],
+        'science': [
+            ('What is an isotope?', 'Atoms of one element with different neutron numbers', 'Atoms with different proton counts in one element', 'A charged molecule only', 'Isotopes have the same proton number but different neutron numbers.'),
+            ('What is the slope of a displacement–time graph?', 'Velocity', 'Mass', 'Energy', 'Change in displacement per unit time is velocity.'),
+        ],
+    },
+}
+
+for year, subject_questions in QUIZ_EXTRA_QUESTIONS.items():
+    for subject_slug, entries in subject_questions.items():
+        YEAR_CONTENT[year][subject_slug]['questions'].extend(
+            build_question_bank_entry(*entry) for entry in entries
+        )
+
+
 def year_band(year):
     if year <= 6:
         return 'Primary years'

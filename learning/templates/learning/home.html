@@ -76,7 +76,7 @@
             <button id="focus-reset" class="focus-reset" type="button" aria-label="Reset timer">↺</button>
           </div>
         </div>
-        <p class="focus-message" id="focus-message" aria-live="polite">No pressure. One small step is enough.</p>
+        <div class="focus-footer"><p class="focus-message" id="focus-message" aria-live="polite">No pressure. One small step is enough.</p><button class="focus-music-toggle" id="focus-music-toggle" type="button" aria-pressed="true">♫ Calm music on</button></div>
       </div>
     </section>
 
@@ -121,7 +121,20 @@
       const message = document.querySelector('#focus-message');
       const toggle = document.querySelector('#focus-toggle');
       const reset = document.querySelector('#focus-reset');
+      const musicToggle = document.querySelector('#focus-music-toggle');
       const presets = [...document.querySelectorAll('.focus-preset')];
+      let audioContext = null;
+      let musicGain = null;
+      let musicVoices = [];
+      let musicTimer = null;
+      let musicEnabled = true;
+      let chordIndex = 0;
+      const chords = [
+        [130.81, 164.81, 196.00, 246.94],
+        [110.00, 130.81, 164.81, 196.00],
+        [87.31, 110.00, 130.81, 164.81],
+        [98.00, 123.47, 146.83, 196.00],
+      ];
       let duration = 25 * 60;
       let remaining = duration;
       let endAt = null;
@@ -132,7 +145,48 @@
         const seconds = (remaining % 60).toString().padStart(2, '0');
         clock.textContent = `${minutes}:${seconds}`;
       };
-      const stop = () => { clearInterval(interval); interval = null; endAt = null; };
+      const stopMusic = () => {
+        clearInterval(musicTimer);
+        musicTimer = null;
+        if (audioContext && audioContext.state === 'running') audioContext.suspend().catch(() => {});
+      };
+      const startMusic = () => {
+        if (!musicEnabled) return;
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) {
+          message.textContent = 'Your browser does not support the optional focus music.';
+          return;
+        }
+        if (!audioContext) {
+          audioContext = new AudioContextClass();
+          musicGain = audioContext.createGain();
+          musicGain.gain.value = 0.035;
+          musicGain.connect(audioContext.destination);
+          musicVoices = chords[0].map((frequency, index) => {
+            const oscillator = audioContext.createOscillator();
+            const voiceGain = audioContext.createGain();
+            oscillator.type = 'sine';
+            oscillator.frequency.value = frequency;
+            voiceGain.gain.value = index === 0 ? 0.48 : 0.28;
+            oscillator.connect(voiceGain);
+            voiceGain.connect(musicGain);
+            oscillator.start();
+            return oscillator;
+          });
+        }
+        audioContext.resume().catch(() => {});
+        clearInterval(musicTimer);
+        musicTimer = setInterval(() => {
+          if (!audioContext || audioContext.state !== 'running') return;
+          chordIndex = (chordIndex + 1) % chords.length;
+          const now = audioContext.currentTime;
+          chords[chordIndex].forEach((frequency, index) => {
+            musicVoices[index].frequency.cancelScheduledValues(now);
+            musicVoices[index].frequency.setTargetAtTime(frequency, now, 1.8);
+          });
+        }, 8000);
+      };
+      const stop = () => { clearInterval(interval); interval = null; endAt = null; stopMusic(); };
       const tick = () => {
         remaining = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
         render();
@@ -140,6 +194,7 @@
           stop();
           status.textContent = 'SESSION COMPLETE';
           toggle.textContent = 'Start again';
+          musicToggle.textContent = '♫ Calm music on';
           message.textContent = 'Nice work. Take a short break or begin another session.';
         }
       };
@@ -149,6 +204,7 @@
           stop();
           status.textContent = 'SESSION PAUSED';
           toggle.textContent = 'Resume session';
+          musicToggle.textContent = musicEnabled ? '♫ Calm music on' : '♫ Calm music off';
           message.textContent = 'Your time is saved. Pick it back up when you’re ready.';
           render();
           return;
@@ -158,6 +214,7 @@
         interval = setInterval(tick, 250);
         status.textContent = 'FOCUS IN PROGRESS';
         toggle.textContent = 'Pause session';
+        startMusic();
         message.textContent = 'Stay with one thing at a time. You’ve got this.';
         tick();
       });
@@ -166,6 +223,7 @@
         remaining = duration;
         status.textContent = 'READY WHEN YOU ARE';
         toggle.textContent = 'Start session';
+        musicToggle.textContent = musicEnabled ? '♫ Calm music on' : '♫ Calm music off';
         message.textContent = 'No pressure. One small step is enough.';
         render();
       });
@@ -180,9 +238,17 @@
         });
         status.textContent = 'READY WHEN YOU ARE';
         toggle.textContent = 'Start session';
+        musicToggle.textContent = musicEnabled ? '♫ Calm music on' : '♫ Calm music off';
         message.textContent = 'No pressure. One small step is enough.';
         render();
       }));
+      musicToggle.addEventListener('click', () => {
+        musicEnabled = !musicEnabled;
+        musicToggle.textContent = musicEnabled ? '♫ Calm music on' : '♫ Calm music off';
+        musicToggle.setAttribute('aria-pressed', String(musicEnabled));
+        if (interval && musicEnabled) startMusic();
+        else if (!musicEnabled) stopMusic();
+      });
     })();
   </script>
 </body>

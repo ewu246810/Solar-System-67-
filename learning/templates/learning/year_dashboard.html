@@ -41,7 +41,7 @@
           <span class="year-subject-top"><span>{{ subject.icon }}</span><span>YEAR {{ year }} / {{ forloop.counter|stringformat:"02d" }}</span></span>
           <span class="year-subject-name">{{ subject.name }}</span>
           <span class="year-subject-topic">{{ subject.topic }}</span>
-          <span class="year-subject-bottom">{% if subject.progress %}BEST {{ subject.progress.best_score }}/{{ subject.progress.question_count }} <span>·</span> {{ subject.progress.coins_awarded }} COINS EARNED{% else %}NOTES <span>·</span> ARTICLE <span>·</span> MINI TEST{% endif %} <span class="year-card-arrow" aria-hidden="true">↗</span></span>
+          <span class="year-subject-bottom">{% if subject.progress %}LESSON {{ subject.progress.best_score }}/{{ subject.progress.question_count }} · {{ subject.progress.coins_awarded }} COINS{% elif subject.quiz_progress %}QUIZ {{ subject.quiz_progress.best_score }}/{{ subject.quiz_progress.question_count }} · {{ subject.quiz_progress.coins_awarded }} COINS{% else %}NOTES <span>·</span> ARTICLE <span>·</span> MINI TEST{% endif %} <span class="year-card-arrow" aria-hidden="true">↗</span></span>
         </a>
       {% endfor %}
     </div>

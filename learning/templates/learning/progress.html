@@ -42,18 +42,23 @@
       </div>
     </section>
 
+    <section class="progress-years" aria-labelledby="quiz-progress-title">
+      <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> RANDOM PRACTICE</p><h2 id="quiz-progress-title">Subject quiz best scores</h2></div><a class="progress-view-all" href="{% url 'quizzes' %}">Take a quiz →</a></div>
+      {% if quiz_summaries %}<div class="quiz-score-grid">{% for item in quiz_summaries %}<a class="quiz-score-card" href="{{ item.url }}"><span class="progress-kicker">YEAR {{ item.year }} · {{ item.subject|upper }}</span><strong>{{ item.score }}<small> / {{ item.total }}</small></strong><span>{{ item.coins }} coins earned</span></a>{% endfor %}</div>{% else %}<p class="quiz-score-empty">Try a subject quiz to save a best score here and earn up to 150 coins.</p>{% endif %}
+    </section>
+
     <section class="pet-section" aria-labelledby="pets-title">
       <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> YOUR LITTLE COMPANIONS</p><h2 id="pets-title">Pet collection</h2></div><span class="section-count">{{ pets|length }} IN YOUR COLLECTION</span></div>
       {% if pets %}
         <div class="pet-grid">
           {% for pet in pets %}
-            <article class="pet-card {% if pet.is_egg %}pet-card--egg{% endif %}"><span class="pet-art" aria-hidden="true">{% if pet.is_egg %}🥚{% elif pet.species == 'comet_fox' %}🦊{% elif pet.species == 'moon_cat' %}🐈{% elif pet.species == 'cloud_bunny' %}🐇{% elif pet.species == 'star_owl' %}🦉{% elif pet.species == 'nebula_axolotl' %}🦎{% else %}🐢{% endif %}</span><div><span class="progress-kicker">{% if pet.is_egg %}READY TO HATCH{% else %}YOUR PET{% endif %}</span><h3>{% if pet.is_egg %}Mysterious egg{% else %}{{ pet.name|default:pet.label }}{% endif %}</h3><p>{% if pet.is_egg %}A surprise friend is waiting inside.{% else %}{{ pet.label }} · hatched {{ pet.hatched_at|date:"M j, Y" }}{% endif %}</p></div>{% if pet.is_egg %}<form method="post" action="{% url 'hatch_egg' pet.id %}">{% csrf_token %}<button class="hatch-button" type="submit">Hatch egg</button></form>{% endif %}</article>
+            <article class="pet-card {% if pet.is_egg %}pet-card--egg{% endif %}"><span class="pet-art" aria-hidden="true">{% if pet.is_egg %}{% if pet.egg_type == 'egg_aurora' %}🌌{% else %}🥚{% endif %}{% elif pet.species == 'comet_fox' %}🦊{% elif pet.species == 'moon_cat' %}🐈{% elif pet.species == 'cloud_bunny' %}🐇{% elif pet.species == 'star_owl' %}🦉{% elif pet.species == 'nebula_axolotl' %}🦎{% elif pet.species == 'aurora_dragon' %}🐉{% elif pet.species == 'crystal_deer' %}🦌{% elif pet.species == 'ringed_lynx' %}🐆{% else %}🐢{% endif %}</span><div><span class="progress-kicker">{% if pet.is_egg %}READY TO HATCH{% else %}YOUR PET{% endif %}</span><h3>{% if pet.is_egg %}{{ pet.egg_type|cut:"egg_"|title }} egg{% else %}{{ pet.name|default:pet.label }}{% endif %}</h3><p>{% if pet.is_egg %}A surprise friend is waiting inside.{% else %}{{ pet.label }} · hatched {{ pet.hatched_at|date:"M j, Y" }}{% endif %}</p></div>{% if pet.is_egg %}<form method="post" action="{% url 'hatch_egg' pet.id %}">{% csrf_token %}<button class="hatch-button" type="submit">Hatch egg</button></form>{% endif %}</article>
           {% endfor %}
         </div>
       {% else %}
         <div class="pet-empty"><span aria-hidden="true">✧</span><p>Your collection is waiting for its first egg. Finish quizzes to earn coins.</p></div>
       {% endif %}
-      <div class="egg-shop"><div class="egg-shop-art" aria-hidden="true">🥚</div><div class="egg-shop-copy"><span class="progress-kicker">THE LITTLE STAR SHOP</span><h3>A surprise pet egg</h3><p>Spend 100 coins to add a mystery egg to your collection. Hatch it whenever you’re ready.</p></div><div class="egg-shop-action"><span>✦ {{ egg_cost }} COINS</span><form method="post" action="{% url 'buy_egg' %}">{% csrf_token %}<button type="submit" {% if profile.coins < egg_cost %}disabled{% endif %}>Buy an egg</button></form></div></div>
+      <a class="egg-shop" href="{% url 'shop' %}"><span class="egg-shop-art" aria-hidden="true">🥚</span><span class="egg-shop-copy"><span class="progress-kicker">THE LITTLE STAR SHOP</span><strong>Visit the shop</strong><span>Browse eggs, treats, and keepsakes for your collection.</span></span><span class="egg-shop-link">OPEN SHOP ↗</span></a>
     </section>
   </main>
   <footer class="site-footer"><span>STUDY HUB / MY PROGRESS</span><span>Small steps add up.</span></footer>

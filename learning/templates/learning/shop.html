@@ -1,0 +1,36 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Star Shop — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body class="has-sidebar shop-page">
+  <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
+  <header class="site-header"><a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a><a class="header-library-link" href="{% url 'progress' %}">MY PROGRESS <span aria-hidden="true">↗</span></a></header>
+  <main class="shop-main">
+    <section class="shop-intro"><p class="eyebrow"><span class="eyebrow-line"></span> THE LITTLE STAR SHOP</p><h1>Spend your coins<br><span>on something fun.</span></h1><p>Quiz coins can get you mystery eggs, pet treats, and keepsakes. Your coin balance is <strong>✦ {{ profile.coins }}</strong>.</p></section>
+    {% if messages %}<div class="progress-messages" aria-live="polite">{% for message in messages %}<p class="progress-message progress-message--{{ message.tags }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+    <div class="shop-grid">
+      {% for item in shop_items %}
+        <article class="shop-item-card {% if item.kind == 'egg' %}shop-item-card--egg{% endif %}">
+          <span class="shop-item-icon" aria-hidden="true">{{ item.icon }}</span>
+          <span class="progress-kicker">{% if item.kind == 'egg' %}MYSTERY PET EGG{% else %}COLLECTIBLE{% endif %}</span>
+          <h2>{{ item.name }}</h2><p>{{ item.description }}</p>
+          <div class="shop-item-footer"><span class="shop-item-price">✦ {{ item.price }} coins</span><span class="shop-item-owned">{% if item.owned %}Owned: {{ item.owned }}{% else %}New{% endif %}</span></div>
+          <form method="post" action="{% url 'buy_shop_item' item.slug %}">{% csrf_token %}<button type="submit" {% if profile.coins < item.price %}disabled{% endif %}>{% if profile.coins < item.price %}Need more coins{% else %}Buy item{% endif %}</button></form>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="shop-note">Earn more coins by completing quizzes. See your pets and collection on the <a href="{% url 'progress' %}">progress page</a>.</p>
+  </main>
+  <footer class="site-footer"><span>STUDY HUB / STAR SHOP</span><span>Every coin is earned by learning.</span></footer>
+</body>
+</html>

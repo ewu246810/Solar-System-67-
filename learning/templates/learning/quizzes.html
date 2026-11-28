@@ -1,0 +1,43 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>{% if quiz_started %}{{ subject.name }} quiz — {% endif %}Quizzes — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+  {% if quiz_started %}<script src="{% static 'learning/quiz.js' %}" defer></script>{% endif %}
+</head>
+<body class="has-sidebar quizzes-page">
+  <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
+  <header class="site-header"><a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a><a class="header-library-link" href="{% url 'progress' %}">MY PROGRESS <span aria-hidden="true">↗</span></a></header>
+  <main class="quizzes-main">
+    {% if quiz_started %}
+      <a class="quiz-back-link" href="{% url 'quizzes' %}">← Choose another subject</a>
+      <section class="quiz-page-intro"><p class="eyebrow"><span class="eyebrow-line"></span> TEN RANDOM QUESTIONS · YEAR {{ year }}</p><h1>{{ subject.name }}<br><span>quick quiz.</span></h1><p>Choose the best answer for each one. You’ll get up to <strong>150 coins</strong> for a perfect score.</p>{% if user.is_authenticated and progress %}<p class="lesson-best-score">Best: {{ progress.best_score }} / {{ progress.question_count }} · {{ progress.coins_awarded }} coins earned</p>{% elif not user.is_authenticated %}<p class="quiz-save-note"><a href="{% url 'login' %}">Log in</a> to earn coins for correct answers and save your best score.</p>{% endif %}</section>
+      <form class="quiz-form standalone-quiz-form" data-quiz-id="{{ quiz_id }}" data-submit-url="{% url 'submit_quiz' %}" novalidate>
+        {% csrf_token %}
+        {% for question in questions %}
+          <fieldset class="quiz-question"><legend><span class="quiz-question-number">QUESTION {{ forloop.counter|stringformat:"02d" }}</span>{{ question.prompt }}</legend><div class="quiz-options">{% for option in question.options %}<label class="quiz-choice"><input type="radio" name="question-{{ forloop.parentloop.counter0 }}" value="{{ forloop.counter0 }}"><span>{{ option }}</span></label>{% endfor %}</div><p class="question-feedback" aria-live="polite"></p></fieldset>
+        {% endfor %}
+        <div class="quiz-actions"><button class="quiz-submit" type="submit">Submit quiz <span aria-hidden="true">↗</span></button><button class="quiz-reset" id="quiz-retry" type="button" hidden>Try a new quiz</button></div><p class="quiz-result" aria-live="polite" hidden></p>
+      </form>
+    {% else %}
+      <section class="quiz-page-intro"><p class="eyebrow"><span class="eyebrow-line"></span> PICK YOUR PRACTICE</p><h1>Choose a subject.<br><span>Take the challenge.</span></h1><p>Pick your year and a subject for a fresh 10-question quiz. Each correct answer earns 15 coins, up to 150.</p></section>
+      {% if quiz_error %}<p class="progress-message progress-message--error" role="alert">Choose a year and subject to start your quiz.</p>{% endif %}
+      <form class="quiz-picker" method="get" action="{% url 'quizzes' %}">
+        <label class="quiz-year-label" for="quiz-year">YOUR SCHOOL YEAR</label>
+        <select id="quiz-year" name="year" required><option value="">Choose a year</option>{% for year_option in years %}<option value="{{ year_option }}" {% if selected_year == year_option %}selected{% endif %}>Year {{ year_option }}</option>{% endfor %}</select>
+        <fieldset><legend>CHOOSE A SUBJECT</legend><div class="quiz-subject-options">{% for subject_option in subjects %}<label class="quiz-subject-choice quiz-subject-choice--{{ subject_option.tone }}"><input type="radio" name="subject" value="{{ subject_option.slug }}" {% if selected_subject == subject_option.slug %}checked{% endif %} required><span class="quiz-subject-icon" aria-hidden="true">{{ subject_option.icon }}</span><span><strong>{{ subject_option.name }}</strong><small>10 questions · up to 150 coins</small></span><span class="quiz-subject-check" aria-hidden="true">✓</span></label>{% endfor %}</div></fieldset>
+        <button class="quiz-start-button" type="submit">Start my quiz <span aria-hidden="true">↗</span></button>
+      </form>
+      {% if not user.is_authenticated %}<p class="quiz-save-note"><a href="{% url 'login' %}">Log in</a> to save your scores and earn coins.</p>{% endif %}
+    {% endif %}
+  </main>
+  <footer class="site-footer"><span>STUDY HUB / QUIZZES</span><span>Learn a little. Earn a little.</span></footer>
+</body>
+</html>

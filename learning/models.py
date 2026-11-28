@@ -41,9 +41,13 @@ class LearnerPet(models.Model):
         ('star_owl', 'Star Owl'),
         ('nebula_axolotl', 'Nebula Axolotl'),
         ('sun_turtle', 'Sun Turtle'),
+        ('aurora_dragon', 'Aurora Dragon'),
+        ('crystal_deer', 'Crystal Deer'),
+        ('ringed_lynx', 'Ringed Lynx'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='learner_pets')
+    egg_type = models.CharField(max_length=30, default='egg_stardust')
     species = models.CharField(max_length=30, choices=PET_CHOICES, blank=True)
     name = models.CharField(max_length=24, blank=True)
     is_favorite = models.BooleanField(default=False)
@@ -56,3 +60,15 @@ class LearnerPet(models.Model):
     @property
     def is_egg(self):
         return not self.species
+
+
+class LearnerInventory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shop_inventory')
+    item_slug = models.SlugField(max_length=40)
+    quantity = models.PositiveIntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'item_slug'], name='unique_user_shop_item'),
+        ]
