@@ -264,7 +264,7 @@ def year_subject(request, year, subject_slug):
     resource = YEAR_CONTENT[year][subject_slug]
     resource = {
         **resource,
-        'questions': random.sample(resource['questions'], k=3),
+        'questions': random.sample(resource['questions'], k=5),
     }
 
     unit_slug = slugify(resource['topic']) or 'core'

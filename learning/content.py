@@ -1,5 +1,7 @@
 """Starter learning resources for the Study Hub year-level library."""
 
+import random
+
 
 SUBJECTS = [
     {'slug': 'maths', 'name': 'Maths', 'icon': '∑', 'tone': 'maths'},
@@ -306,8 +308,7 @@ YEAR_CONTENT = {
     },
 }
 
-# An extra question for every year and subject gives each quiz a larger pool.
-# The page selects three from each four-question bank on every visit.
+# Extra questions for every year and subject give each quiz a larger pool.
 EXTRA_QUESTIONS = {
     1: {
         'maths': question('What is 5 + 2?', ['6', '7', '8'], 1, 'Five counters plus two more makes seven.'),
@@ -374,6 +375,263 @@ EXTRA_QUESTIONS = {
 for year, subject_questions in EXTRA_QUESTIONS.items():
     for subject_slug, extra_question in subject_questions.items():
         YEAR_CONTENT[year][subject_slug]['questions'].append(extra_question)
+
+# Four more level-specific questions per lesson. Answers are listed first here;
+# the helper below moves them to a random position when building each bank.
+MORE_QUESTIONS = {
+    1: {
+        'maths': [
+            ('What is 3 + 4?', '7', '6', '8', 'Count on four from 3 to reach 7.'),
+            ('Which number is greatest?', '9', '5', '7', 'Nine is greater than five and seven.'),
+            ('There are 6 birds and 2 fly away. How many remain?', '4', '8', '3', 'Take 2 away from 6: 6 − 2 = 4.'),
+            ('How many corners does a rectangle have?', '4', '3', '5', 'A rectangle has four corners.'),
+        ],
+        'english': [
+            ('Which word begins with the letter B?', 'ball', 'sun', 'cat', 'Ball begins with B.'),
+            ('Which word rhymes with “hop”?', 'mop', 'hot', 'hen', 'Hop and mop end with the same sound.'),
+            ('Which is a question?', 'Where is my hat?', 'I found my hat.', 'My hat is red.', 'A question asks something and ends with a question mark.'),
+            ('Which word names a person?', 'teacher', 'quickly', 'green', 'A teacher is a person.'),
+        ],
+        'science': [
+            ('Which part of a plant is usually green and catches light?', 'Leaf', 'Root', 'Seed', 'Leaves catch light for the plant.'),
+            ('Which animal lays eggs?', 'Hen', 'Cat', 'Dog', 'Hens lay eggs.'),
+            ('What do we use to hear sounds?', 'Ears', 'Elbows', 'Knees', 'Our ears detect sounds.'),
+            ('Which is a natural source of light?', 'The Sun', 'A book', 'A chair', 'The Sun gives out its own light.'),
+        ],
+    },
+    2: {
+        'maths': [
+            ('What is 27 + 10?', '37', '28', '17', 'Adding one ten changes 27 to 37.'),
+            ('What is 45 − 5?', '40', '50', '35', 'Five ones taken from 45 leaves 40.'),
+            ('Which number has 3 tens and 8 ones?', '38', '83', '308', 'Three tens and eight ones make 38.'),
+            ('How many sides does a hexagon have?', '6', '5', '8', 'A hexagon has six sides.'),
+        ],
+        'english': [
+            ('Which is a describing word?', 'soft', 'run', 'table', '“Soft” describes how something feels.'),
+            ('Which punctuation ends a question?', '?', '.', ',', 'A question mark signals a question.'),
+            ('Which word means the opposite of “early”?', 'late', 'soon', 'first', 'Late is the opposite of early.'),
+            ('Which word is plural?', 'dogs', 'dog', 'a dog', 'Dogs names more than one dog.'),
+        ],
+        'science': [
+            ('Which material is flexible?', 'Rubber', 'Glass', 'Stone', 'Rubber can bend and stretch.'),
+            ('What force pulls objects towards Earth?', 'Gravity', 'Sound', 'Light', 'Gravity pulls objects towards Earth.'),
+            ('Which object is a source of heat?', 'A warm heater', 'An ice cube', 'A shadow', 'A heater transfers heat to its surroundings.'),
+            ('What do most animals need to breathe?', 'Air', 'Sand', 'Plastic', 'Animals need gases in the air to breathe.'),
+        ],
+    },
+    3: {
+        'maths': [
+            ('What is 6 × 4?', '24', '20', '10', 'Six groups of four make 24.'),
+            ('What is 30 ÷ 5?', '6', '5', '25', 'Thirty shared into five equal groups gives six each.'),
+            ('What is 100 − 37?', '63', '73', '67', 'Subtracting 37 from 100 gives 63.'),
+            ('How many minutes are in half an hour?', '30', '15', '60', 'Half of 60 minutes is 30 minutes.'),
+        ],
+        'english': [
+            ('Which word is an adverb in “The rabbit hopped quickly”?', 'quickly', 'rabbit', 'hopped', '“Quickly” tells how the rabbit hopped.'),
+            ('Which sentence uses a comma in a list?', 'We saw birds, frogs, and fish.', 'We saw birds frogs and fish.', 'We, saw birds frogs and fish.', 'Commas separate items in a list.'),
+            ('What is the setting of a story?', 'Where and when it happens', 'The title only', 'The final word', 'Setting tells the place and time.'),
+            ('Which word is closest in meaning to “enormous”?', 'Huge', 'Tiny', 'Quiet', 'Enormous means very large.'),
+        ],
+        'science': [
+            ('Which state of matter keeps its own shape?', 'Solid', 'Liquid', 'Gas', 'A solid keeps its shape unless a force changes it.'),
+            ('What do we call an animal that eats plants?', 'Herbivore', 'Carnivore', 'Decomposer', 'Herbivores eat plants.'),
+            ('Which part of a plant makes seeds?', 'Flower', 'Root', 'Stem only', 'Many plants produce seeds in flowers.'),
+            ('What happens to a shadow when an object blocks light?', 'It forms behind the object', 'It makes its own light', 'It turns into sound', 'A shadow forms where light is blocked.'),
+        ],
+    },
+    4: {
+        'maths': [
+            ('What is 3/8 + 2/8?', '5/8', '5/16', '1/8', 'With equal denominators, add the numerators: 3 + 2 = 5.'),
+            ('What is 7 × 8?', '56', '54', '64', 'Seven groups of eight make 56.'),
+            ('A rectangle is 5 cm long and 3 cm wide. What is its area?', '15 cm²', '16 cm²', '8 cm²', 'Area is length × width: 5 × 3 = 15 cm².'),
+            ('What is 1,000 − 250?', '750', '850', '650', 'Taking 250 away from 1,000 leaves 750.'),
+        ],
+        'english': [
+            ('Which word is a synonym for “brave”?', 'Courageous', 'Afraid', 'Careless', 'Courageous means brave.'),
+            ('What does a pronoun replace?', 'A noun', 'A full paragraph', 'A punctuation mark', 'Pronouns such as “she” can stand in for a noun.'),
+            ('Which sentence is direct speech?', '“I am ready,” said Sam.', 'Sam felt ready.', 'Sam was getting ready.', 'Direct speech shows the exact words spoken.'),
+            ('Why might a writer use an exclamation mark?', 'To show strong feeling', 'To separate every noun', 'To start a paragraph', 'An exclamation mark can show excitement or emphasis.'),
+        ],
+        'science': [
+            ('Which part of a food chain is usually the producer?', 'A green plant', 'A fox', 'A mushroom', 'Green plants make food using light.'),
+            ('What is a force?', 'A push or a pull', 'A kind of habitat', 'A state of matter', 'Forces are pushes or pulls that can change motion.'),
+            ('Which body system moves blood around the body?', 'Circulatory system', 'Digestive system', 'Skeletal system', 'The circulatory system transports blood.'),
+            ('What is condensation?', 'Gas changing into liquid', 'Solid changing into gas', 'Liquid changing into solid', 'Cooling water vapour can condense into liquid droplets.'),
+        ],
+    },
+    5: {
+        'maths': [
+            ('What is 3.7 + 1.8?', '5.5', '4.15', '5.15', 'Align decimal points: 3.7 + 1.8 = 5.5.'),
+            ('What is 2/3 of 18?', '12', '9', '6', 'One third of 18 is 6, so two thirds is 12.'),
+            ('What is the volume of a 2 × 3 × 4 cm box?', '24 cm³', '9 cm³', '24 cm²', 'Volume is length × width × height: 2 × 3 × 4 = 24 cm³.'),
+            ('Which is a prime number?', '13', '15', '21', '13 has exactly two factors: 1 and 13.'),
+        ],
+        'english': [
+            ('Which connective shows cause?', 'because', 'meanwhile', 'although', '“Because” introduces a reason.'),
+            ('What is the first-person pronoun in “We explored the cave”?', 'We', 'explored', 'cave', '“We” is a first-person pronoun.'),
+            ('What is a character’s motivation?', 'The reason for their actions', 'The book’s page count', 'The story’s setting', 'Motivation explains why a character acts.'),
+            ('Which word is an antonym of “ancient”?', 'Modern', 'Old', 'Historic', 'Modern is the opposite of ancient.'),
+        ],
+        'science': [
+            ('Which organ pumps blood?', 'Heart', 'Lung', 'Stomach', 'The heart pumps blood through the body.'),
+            ('What is the variable you deliberately change called?', 'Independent variable', 'Dependent variable', 'Control variable', 'The independent variable is the factor changed by the investigator.'),
+            ('Which is a renewable energy source?', 'Wind', 'Coal', 'Petrol', 'Wind is naturally replenished.'),
+            ('What causes day and night?', 'Earth rotating on its axis', 'The Moon orbiting Earth', 'The Sun orbiting Earth each day', 'Earth’s rotation brings places into and out of sunlight.'),
+        ],
+    },
+    6: {
+        'maths': [
+            ('What is 3/5 + 1/10?', '7/10', '4/15', '4/10', 'Convert 3/5 to 6/10, then add 1/10.'),
+            ('What is 15% of 80?', '12', '8', '15', '10% is 8 and 5% is 4, so 15% is 12.'),
+            ('What is the mean of 4, 6, and 8?', '6', '18', '7', 'Add to get 18, then divide by 3.'),
+            ('A triangle has angles 50° and 60°. What is the third angle?', '70°', '80°', '90°', 'Triangle angles total 180°; 180 − 50 − 60 = 70°.'),
+        ],
+        'english': [
+            ('Which is a complex sentence?', 'Although it rained, we played.', 'It rained.', 'Rain fell; clouds gathered.', '“Although” introduces a dependent clause.'),
+            ('What is the purpose of a persuasive text?', 'To convince the reader', 'To list random facts', 'To give stage directions', 'Persuasive writing aims to influence an audience.'),
+            ('Which phrase uses personification?', 'The wind whispered', 'The wind was strong', 'The wind from the south', 'Whispering is a human action given to the wind.'),
+            ('What does “reluctant” mean?', 'Unwilling', 'Eager', 'Certain', 'A reluctant person is not keen to do something.'),
+        ],
+        'science': [
+            ('Which process lets liquid water enter the air as water vapour?', 'Evaporation', 'Condensation', 'Freezing', 'Evaporation changes liquid water into water vapour.'),
+            ('What is the main job of the lungs?', 'Exchange gases', 'Pump blood', 'Digest food', 'The lungs take in oxygen and release carbon dioxide.'),
+            ('What is a fair test?', 'One that changes one factor at a time', 'One with no measurements', 'One where results are chosen first', 'Changing one factor helps identify its effect.'),
+            ('Which object is a good electrical insulator?', 'Rubber', 'Copper', 'Aluminium', 'Rubber resists the flow of electric current.'),
+        ],
+    },
+    7: {
+        'maths': [
+            ('What is −6 + 10?', '4', '-16', '16', 'Moving ten places right from −6 lands on 4.'),
+            ('What is 0.25 as a percentage?', '25%', '2.5%', '250%', 'Multiply 0.25 by 100 to get 25%.'),
+            ('A map scale is 1 cm to 5 km. What distance is 4 cm?', '20 km', '9 km', '25 km', 'Four centimetres represent 4 × 5 = 20 km.'),
+            ('What is the value of 3² + 4?', '13', '49', '10', 'Evaluate the power first: 9 + 4 = 13.'),
+        ],
+        'english': [
+            ('What is the narrator?', 'The voice telling the story', 'The story’s setting', 'The book cover', 'The narrator is the voice or perspective through which a story is told.'),
+            ('Which is an example of alliteration?', 'Wild winds whistle', 'The wind was cold', 'A quiet afternoon', 'The repeated initial w sound creates alliteration.'),
+            ('What is the purpose of a headline?', 'To introduce and attract interest in a story', 'To provide the ending', 'To list every source', 'A headline summarises or draws attention to a story.'),
+            ('Which modal verb suggests possibility?', 'might', 'must', 'will', '“Might” expresses possibility rather than certainty.'),
+        ],
+        'science': [
+            ('What is the centre of an atom called?', 'Nucleus', 'Cell wall', 'Circuit', 'The nucleus contains protons and neutrons.'),
+            ('Which variable is measured as the outcome?', 'Dependent variable', 'Independent variable', 'Control variable', 'The dependent variable responds to the change being tested.'),
+            ('What is an adaptation?', 'A feature that helps an organism survive', 'A sudden weather event', 'A kind of rock', 'Adaptations can help organisms meet challenges in their environment.'),
+            ('Which planet is closest to the Sun?', 'Mercury', 'Venus', 'Mars', 'Mercury is the innermost planet in our Solar System.'),
+        ],
+    },
+    8: {
+        'maths': [
+            ('Expand 2(x + 5).', '2x + 10', '2x + 5', 'x + 10', 'Multiply both terms inside the brackets by 2.'),
+            ('What is the area of a circle with radius 2?', '4π', '2π', '8π', 'Area = πr² = π × 2² = 4π.'),
+            ('What is the probability of rolling an even number on a fair six-sided die?', '1/2', '1/3', '2/3', 'Three of the six outcomes are even, so 3/6 = 1/2.'),
+            ('Solve 5x = 35.', 'x = 7', 'x = 30', 'x = 40', 'Divide both sides by 5.'),
+        ],
+        'english': [
+            ('What is a rhetorical question?', 'A question asked for effect', 'A question with no question mark', 'A list of facts', 'Rhetorical questions prompt thought without requiring an answer.'),
+            ('Which sentence is in the passive voice?', 'The match was won by our team.', 'Our team won the match.', 'Our team is winning.', 'The subject “match” receives the action.'),
+            ('What is connotation?', 'The associations a word suggests', 'Its number of syllables', 'Its place in a sentence', 'Connotation refers to feelings or ideas associated with a word.'),
+            ('Which connective signals a conclusion?', 'therefore', 'however', 'for instance', '“Therefore” signals a result or conclusion.'),
+        ],
+        'science': [
+            ('What is the chemical formula for water?', 'H₂O', 'CO₂', 'O₂', 'A water molecule contains two hydrogen atoms and one oxygen atom.'),
+            ('What is the function of a cell membrane?', 'Control what enters and leaves the cell', 'Store all genetic information', 'Make bones', 'The membrane regulates movement into and out of a cell.'),
+            ('What is the unit of force?', 'Newton', 'Joule', 'Watt', 'Force is measured in newtons.'),
+            ('What happens to particles when a substance is heated?', 'They gain energy and move more', 'They stop moving', 'They disappear', 'Heating usually increases particle motion.'),
+        ],
+    },
+    9: {
+        'maths': [
+            ('Solve 2x + 3 = 11.', 'x = 4', 'x = 7', 'x = 14', 'Subtract 3, then divide 8 by 2.'),
+            ('What is the gradient of a horizontal line?', '0', '1', 'Undefined', 'A horizontal line has no vertical change, so its gradient is zero.'),
+            ('What is the circumference of a circle with diameter 6?', '6π', '12π', '3π', 'Circumference = πd = 6π.'),
+            ('If a = 3 and b = 2, what is a² − b?', '7', '5', '14', 'Substitute: 3² − 2 = 9 − 2 = 7.'),
+        ],
+        'english': [
+            ('What is an extended metaphor?', 'A metaphor developed across a text', 'A comparison using “like” once', 'A factual description', 'An extended metaphor continues a comparison over several lines or ideas.'),
+            ('What does a cohesive device do?', 'Links ideas across a text', 'Changes the text’s font', 'Names the audience', 'Cohesive devices help ideas connect smoothly.'),
+            ('What is bias in a source?', 'A partial perspective that may affect presentation', 'A measurement unit', 'A type of paragraph', 'Bias can shape which facts or viewpoints are emphasised.'),
+            ('Which phrase gives a qualified claim?', 'In some cases', 'Without a doubt, always', 'Everyone knows', '“In some cases” limits a claim rather than making it absolute.'),
+        ],
+        'science': [
+            ('What is the charge of a proton?', 'Positive', 'Negative', 'Neutral', 'Protons carry a positive charge.'),
+            ('What is the purpose of a fuse?', 'Break a circuit if current is too high', 'Increase the voltage', 'Store chemical energy', 'A fuse melts and opens the circuit when excessive current flows.'),
+            ('Which type of rock forms from cooled magma or lava?', 'Igneous', 'Sedimentary', 'Metamorphic', 'Igneous rock forms when molten rock cools and solidifies.'),
+            ('What is biodiversity?', 'The variety of living things', 'The speed of a planet', 'The amount of rainfall only', 'Biodiversity describes the variety of organisms in an area.'),
+        ],
+    },
+    10: {
+        'maths': [
+            ('What is the solution to x² = 16?', 'x = 4 or x = −4', 'x = 8 only', 'x = −8 only', 'Both 4² and (−4)² equal 16.'),
+            ('What is sin(90°)?', '1', '0', '−1', 'The sine of 90 degrees is 1.'),
+            ('A $50 price increases by 10%. What is the new price?', '$55', '$60', '$45', '10% of $50 is $5, so the new price is $55.'),
+            ('What is the midpoint of (2, 4) and (6, 8)?', '(4, 6)', '(8, 12)', '(2, 2)', 'Average the x-coordinates and y-coordinates separately.'),
+        ],
+        'english': [
+            ('What is the purpose of a bibliography?', 'List the sources used', 'Introduce the main character', 'Summarise each paragraph', 'A bibliography acknowledges and lists sources.'),
+            ('What does juxtaposition do?', 'Places ideas side by side to highlight contrast', 'Repeats a rhyme scheme', 'Removes the text’s context', 'Juxtaposition invites readers to compare nearby ideas.'),
+            ('What is a reliable primary source?', 'A firsthand record relevant to the topic', 'An unrelated opinion copied online', 'A fictional summary', 'Primary sources provide direct or firsthand evidence.'),
+            ('What is the effect of using a short sentence after a long one?', 'It can create emphasis or a pause', 'It always changes the tense', 'It removes the subject', 'A short sentence can make a point feel sharp or emphatic.'),
+        ],
+        'science': [
+            ('What is the pH of a neutral solution at room temperature?', '7', '0', '14', 'A neutral solution has pH 7.'),
+            ('What is the role of DNA in a cell?', 'Store genetic instructions', 'Carry oxygen in blood', 'Digest food', 'DNA stores instructions used in cell functions and inheritance.'),
+            ('What is the acceleration of an object at constant velocity?', '0', 'Equal to its speed', 'Always increasing', 'Constant velocity means velocity is not changing.'),
+            ('Which gas is released by plants during photosynthesis?', 'Oxygen', 'Nitrogen', 'Methane', 'Oxygen is produced during photosynthesis.'),
+        ],
+    },
+    11: {
+        'maths': [
+            ('What is the gradient of y = 3x − 2?', '3', '-2', '1', 'The coefficient of x gives the gradient.'),
+            ('What is the probability of rolling a number greater than 4 on a fair die?', '1/3', '1/2', '2/3', 'The outcomes are 5 and 6: 2/6 = 1/3.'),
+            ('Simplify (x³)(x²).', 'x⁵', 'x⁶', '2x⁵', 'When multiplying powers with the same base, add exponents.'),
+            ('What is the median of 2, 3, 8, 10, 12?', '8', '3', '7', 'The median is the middle value in the ordered list.'),
+        ],
+        'english': [
+            ('What is an unreliable narrator?', 'A narrator whose account may not be fully trusted', 'A narrator who speaks in rhyme', 'A character with no dialogue', 'An unreliable narrator may omit, misunderstand, or distort events.'),
+            ('What is an imperative sentence used for?', 'Giving a command or instruction', 'Asking a question only', 'Reporting past events only', 'Imperatives tell someone to do something.'),
+            ('What does textual context include?', 'Relevant circumstances around a text', 'Only the final sentence', 'The font size', 'Context can include time, place, audience, and purpose.'),
+            ('Which phrase signals a concession?', 'Admittedly', 'For example', 'As a result', '“Admittedly” acknowledges a point before qualifying an argument.'),
+        ],
+        'science': [
+            ('What is the SI unit of energy?', 'Joule', 'Newton', 'Ampere', 'Energy is measured in joules.'),
+            ('What does natural selection act on?', 'Inherited variation affecting survival and reproduction', 'Traits acquired in one day', 'Random choices by organisms', 'Natural selection changes populations through heritable differences.'),
+            ('What is the independent variable in an investigation?', 'The factor deliberately changed', 'The measured result', 'A factor kept constant', 'The independent variable is the one the investigator changes.'),
+            ('What does a half-life describe?', 'Time for half of a radioactive sample to decay', 'Time for a planet to orbit twice', 'The mass of a single atom', 'Half-life is the time for half the unstable nuclei to decay.'),
+        ],
+    },
+    12: {
+        'maths': [
+            ('What is the derivative of 3x²?', '6x', '3x', '6', 'Apply the power rule: 3 × 2x = 6x.'),
+            ('What is ∫ 2x dx?', 'x² + C', '2 + C', '2x² + C', 'An antiderivative of 2x is x²; include the constant C.'),
+            ('If two events are independent, how do you find P(A and B)?', 'P(A) × P(B)', 'P(A) + P(B)', 'P(A) − P(B)', 'For independent events, multiply their probabilities.'),
+            ('What does a 95% confidence interval describe?', 'A range produced by a method with stated long-run coverage', 'A guarantee that one result is correct', 'The largest possible sample', 'The interval method has 95% coverage over repeated samples under its assumptions.'),
+        ],
+        'english': [
+            ('What is an intertextual reference?', 'A connection to another text', 'A list of chapter titles', 'A sentence without a verb', 'Intertextuality links one text with another.'),
+            ('What is a discourse community?', 'A group that shares communication practices and purposes', 'A list of unrelated readers', 'A type of rhyme', 'Discourse communities share conventions for communicating.'),
+            ('What does register refer to?', 'Language choices suited to a context', 'The order of a bibliography', 'The number of characters', 'Register shifts with audience, purpose, and situation.'),
+            ('What is the purpose of a synthesis paragraph?', 'Combine sources to develop an insight', 'Summarise one source only', 'Add evidence without linking it', 'Synthesis connects evidence from multiple sources into a reasoned point.'),
+        ],
+        'science': [
+            ('What does the slope of a displacement-time graph represent?', 'Velocity', 'Acceleration', 'Force', 'The change in displacement per unit time is velocity.'),
+            ('What is a confidence level in statistical inference?', 'A long-run success rate of the interval procedure', 'The probability a hypothesis is true', 'The size of the population', 'Confidence describes the method’s long-run interval coverage.'),
+            ('What is an isotope?', 'Atoms of the same element with different neutron numbers', 'Atoms with different proton numbers but same name', 'A molecule with no electrons', 'Isotopes share proton number but differ in neutron number.'),
+            ('What is a limitation of a scientific model?', 'It simplifies aspects of the real system', 'It always contains every detail', 'It cannot be revised', 'Models are useful simplifications and may not capture every detail.'),
+        ],
+    },
+}
+
+def build_question_bank_entry(prompt, correct, wrong_one, wrong_two, explanation):
+    options = [correct, wrong_one, wrong_two]
+    random.shuffle(options)
+    return question(prompt, options, options.index(correct), explanation)
+
+
+for year, subject_questions in MORE_QUESTIONS.items():
+    for subject_slug, entries in subject_questions.items():
+        YEAR_CONTENT[year][subject_slug]['questions'].extend(
+            build_question_bank_entry(*entry) for entry in entries
+        )
 
 
 def year_band(year):
