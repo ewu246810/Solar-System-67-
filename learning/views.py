@@ -1,11 +1,15 @@
+import json
 import random
+import urllib.error
+import urllib.request
 
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 
 from .content import SUBJECTS, YEAR_CONTENT, year_band
 
@@ -95,6 +99,90 @@ def coding(request):
 
 def downtime(request):
     return render(request, 'learning/downtime.html')
+
+
+def dot(request):
+    return render(request, 'learning/dot.html', {
+        'dot_configured': bool(settings.OPENAI_API_KEY),
+    })
+
+
+@require_POST
+def dot_chat(request):
+    api_key = settings.OPENAI_API_KEY
+    if not api_key:
+        return JsonResponse({
+            'error': 'Dot needs an OpenAI API key before it can chat. Add OPENAI_API_KEY to the server environment and try again.'
+        }, status=503)
+
+    if len(request.body) > 16000:
+        return JsonResponse({'error': 'That message is a bit too long. Try shortening it.'}, status=413)
+
+    try:
+        payload = json.loads(request.body)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return JsonResponse({'error': 'I couldn’t read that message. Please try again.'}, status=400)
+
+    messages = payload.get('messages') if isinstance(payload, dict) else None
+    if not isinstance(messages, list) or not messages or len(messages) > 12:
+        return JsonResponse({'error': 'Send a message to get started.'}, status=400)
+
+    clean_messages = []
+    for message in messages:
+        if not isinstance(message, dict):
+            return JsonResponse({'error': 'That conversation could not be read.'}, status=400)
+        role = message.get('role')
+        content = message.get('content')
+        if role not in {'user', 'assistant'} or not isinstance(content, str) or not content.strip() or len(content) > 2000:
+            return JsonResponse({'error': 'Messages must be under 2,000 characters.'}, status=400)
+        clean_messages.append({'role': role, 'content': content.strip()})
+
+    request_data = json.dumps({
+        'model': settings.OPENAI_MODEL,
+        'instructions': (
+            'You are Dot, a friendly and patient study helper in a school Study Hub. '
+            'If the student has not named a topic yet, ask what they want to study today. '
+            'Otherwise, respond to their question directly. Explain ideas clearly '
+            'at the student’s level, ask their year level when it would help, use short '
+            'steps and examples, and encourage them to think rather than simply doing '
+            'their homework for them. You can explain topics, make practice questions, '
+            'check understanding, and help plan revision. Keep replies warm and concise. '
+            'Do not ask students to share personal or identifying information.'
+        ),
+        'input': clean_messages,
+        'max_output_tokens': 600,
+        'store': False,
+    }).encode('utf-8')
+    upstream_request = urllib.request.Request(
+        'https://api.openai.com/v1/responses',
+        data=request_data,
+        headers={
+            'Authorization': f'Bearer {api_key}',
+            'Content-Type': 'application/json',
+        },
+        method='POST',
+    )
+
+    try:
+        with urllib.request.urlopen(upstream_request, timeout=45) as response:
+            result = json.loads(response.read())
+    except urllib.error.HTTPError:
+        return JsonResponse({'error': 'Dot couldn’t get a reply just now. Please try again in a moment.'}, status=502)
+    except (urllib.error.URLError, TimeoutError):
+        return JsonResponse({'error': 'Dot couldn’t connect just now. Check your connection and try again.'}, status=502)
+    except (json.JSONDecodeError, OSError):
+        return JsonResponse({'error': 'Dot received an unreadable reply. Please try again.'}, status=502)
+
+    reply = ''.join(
+        item.get('text') or item.get('refusal', '')
+        for output_item in result.get('output', [])
+        if output_item.get('type') == 'message'
+        for item in output_item.get('content', [])
+        if item.get('type') in {'output_text', 'refusal'}
+    ).strip()
+    if not reply:
+        return JsonResponse({'error': 'Dot didn’t have a reply ready. Please try again.'}, status=502)
+    return JsonResponse({'reply': reply})
 
 
 def learning_library(request):

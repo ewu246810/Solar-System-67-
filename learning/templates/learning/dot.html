@@ -1,0 +1,143 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <meta name="description" content="Chat with Dot, your friendly Study Hub learning helper.">
+  <title>Dot — Study Hub AI helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body class="has-sidebar dot-page">
+  <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <span class="dot-header-state"><span class="status-dot"></span> YOUR STUDY BUDDY</span>
+  </header>
+
+  <main class="dot-main">
+    <section class="dot-welcome" aria-labelledby="dot-title">
+      <span class="dot-avatar" aria-hidden="true"><span>✦</span></span>
+      <div><p class="eyebrow"><span class="eyebrow-line"></span> MEET YOUR STUDY HELPER</p><h1 id="dot-title">Hi, I’m Dot.</h1><p>I can explain a tricky topic, quiz you, or help you make a study plan. We’ll take it one step at a time.</p></div>
+    </section>
+
+    <section class="dot-chat" aria-label="Chat with Dot">
+      <div class="dot-chat-heading"><div><span class="dot-online"><span class="status-dot"></span> {% if dot_configured %}READY TO LEARN{% else %}SETUP NEEDED{% endif %}</span><h2>What do you want to study today?</h2></div><button id="dot-clear" class="dot-clear" type="button" aria-label="Start a new conversation">New chat</button></div>
+      {% if not dot_configured %}<p class="dot-setup-note">One setup step left: add <code>OPENAI_API_KEY</code> to the server environment to start chatting with Dot.</p>{% endif %}
+      <div id="dot-messages" class="dot-messages" role="log" aria-live="polite" aria-relevant="additions text">
+        <article class="chat-message chat-message--dot"><span class="chat-message-avatar" aria-hidden="true">✦</span><div class="chat-bubble"><span class="chat-sender">DOT</span><p>What do you want to study today? I can help explain a tricky idea, make practice questions, or plan a study session. Tell me your year level too if that would help.</p></div></article>
+      </div>
+      <div class="dot-suggestions" aria-label="Try asking Dot">
+        <button type="button" class="dot-suggestion">Explain fractions simply</button>
+        <button type="button" class="dot-suggestion">Quiz me on the solar system</button>
+        <button type="button" class="dot-suggestion">Help me plan revision</button>
+      </div>
+      <form id="dot-form" class="dot-compose">
+        {% csrf_token %}
+        <label class="sr-only" for="dot-input">Message Dot</label>
+        <textarea id="dot-input" name="message" rows="1" maxlength="2000" placeholder="Ask Dot anything about your learning…" required></textarea>
+        <button id="dot-send" class="dot-send" type="submit" aria-label="Send message"><span>Send</span><span aria-hidden="true">↑</span></button>
+      </form>
+      <p class="dot-disclaimer">Dot can make mistakes, so check important answers with your teacher or class notes. Please don’t share personal details.</p>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const form = document.querySelector('#dot-form');
+      const input = document.querySelector('#dot-input');
+      const messages = document.querySelector('#dot-messages');
+      const send = document.querySelector('#dot-send');
+      const clear = document.querySelector('#dot-clear');
+      const suggestions = [...document.querySelectorAll('.dot-suggestion')];
+      const history = [];
+
+      const addMessage = (role, text, pending = false) => {
+        const article = document.createElement('article');
+        article.className = `chat-message chat-message--${role === 'user' ? 'user' : 'dot'}`;
+        const avatar = document.createElement('span');
+        avatar.className = 'chat-message-avatar';
+        avatar.setAttribute('aria-hidden', 'true');
+        avatar.textContent = role === 'user' ? 'YOU' : '✦';
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble';
+        const sender = document.createElement('span');
+        sender.className = 'chat-sender';
+        sender.textContent = role === 'user' ? 'YOU' : 'DOT';
+        const paragraph = document.createElement('p');
+        paragraph.textContent = text;
+        bubble.append(sender, paragraph);
+        article.append(avatar, bubble);
+        if (pending) article.classList.add('is-pending');
+        messages.append(article);
+        messages.scrollTop = messages.scrollHeight;
+        return article;
+      };
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const text = input.value.trim();
+        if (!text || send.disabled) return;
+        history.push({ role: 'user', content: text });
+        addMessage('user', text);
+        input.value = '';
+        input.style.height = 'auto';
+        const pending = addMessage('assistant', 'Dot is thinking…', true);
+        send.disabled = true;
+        clear.disabled = true;
+        input.disabled = true;
+        try {
+          const response = await fetch('{% url "dot_chat" %}', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify({ messages: history.slice(-12) }),
+          });
+          const result = await response.json();
+          pending.remove();
+          if (!response.ok) throw new Error(result.error || 'Dot could not reply just now. Please try again.');
+          history.push({ role: 'assistant', content: result.reply });
+          addMessage('assistant', result.reply);
+        } catch (error) {
+          pending.remove();
+          history.pop();
+          addMessage('assistant', error.message || 'Dot couldn’t connect just now. Please try again.');
+        } finally {
+          send.disabled = false;
+          clear.disabled = false;
+          input.disabled = false;
+          input.focus();
+        }
+      });
+
+      input.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = `${Math.min(input.scrollHeight, 130)}px`;
+      });
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          form.requestSubmit();
+        }
+      });
+      suggestions.forEach((button) => button.addEventListener('click', () => {
+        input.value = button.textContent;
+        input.focus();
+        input.dispatchEvent(new Event('input'));
+      }));
+      clear.addEventListener('click', () => {
+        history.length = 0;
+        messages.innerHTML = '<article class="chat-message chat-message--dot"><span class="chat-message-avatar" aria-hidden="true">✦</span><div class="chat-bubble"><span class="chat-sender">DOT</span><p>What do you want to study today? I can help explain a tricky idea, make practice questions, or plan a study session. Tell me your year level too if that would help.</p></div></article>';
+        input.focus();
+      });
+    })();
+  </script>
+</body>
+</html>

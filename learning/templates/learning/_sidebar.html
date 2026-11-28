@@ -4,6 +4,7 @@
   <nav class="sidebar-nav" aria-label="Main navigation">
     <a class="sidebar-link {% if request.resolver_match.url_name == 'home' %}is-active{% endif %}" href="{% url 'home' %}"><span>⌂</span> Overview</a>
     <span class="sidebar-label sidebar-label--section">SUBJECTS</span>
+    <a class="sidebar-link sidebar-link--dot {% if request.resolver_match.url_name == 'dot' %}is-active{% endif %}" href="{% url 'dot' %}"><span>✦</span> Dot AI helper</a>
     <a class="sidebar-link sidebar-link--science {% if request.resolver_match.url_name == 'science' or request.resolver_match.url_name == 'solar_system' %}is-active{% endif %}" href="{% url 'science' %}"><span>✳</span> Science</a>
     <a class="sidebar-link sidebar-link--maths {% if request.resolver_match.url_name == 'maths' %}is-active{% endif %}" href="{% url 'maths' %}"><span>∑</span> Maths</a>
     <a class="sidebar-link sidebar-link--english {% if request.resolver_match.url_name == 'english' %}is-active{% endif %}" href="{% url 'english' %}"><span>Aa</span> English</a>

@@ -64,6 +64,8 @@ CSRF_TRUSTED_ORIGINS.append('https://study-hub-ewu.vercel.app')
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+OPENAI_MODEL = os.environ.get('OPENAI_MODEL', 'gpt-4.1-mini')
 
 
 # Application definition
