@@ -10,6 +10,7 @@ urlpatterns = [
     path('english/', views.english, name='english'),
     path('django/', views.django, name='django'),
     path('coding/', views.coding, name='coding'),
+    path('downtime/', views.downtime, name='downtime'),
     path('accounts/signup/', views.signup, name='signup'),
     path('learn/', views.learning_library, name='learning_library'),
     path('learn/year/<int:year>/', views.year_dashboard, name='year_dashboard'),

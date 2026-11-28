@@ -93,6 +93,10 @@ def coding(request):
     return render(request, 'learning/coding.html')
 
 
+def downtime(request):
+    return render(request, 'learning/downtime.html')
+
+
 def learning_library(request):
     years = [
         {'number': year, 'band': year_band(year)}

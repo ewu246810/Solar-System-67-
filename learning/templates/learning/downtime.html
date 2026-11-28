@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>Downtime Centre — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body class="has-sidebar downtime-page">
+  <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'home' %}">BACK TO STUDY <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="downtime-main">
+    <section class="downtime-intro">
+      <p class="eyebrow"><span class="eyebrow-line"></span> REST IS PART OF LEARNING</p>
+      <h1>A little room<br><span>to reset.</span></h1>
+      <p>Take a pause, stretch, or give your mind a quiet moment. Come back to your work when you feel ready.</p>
+    </section>
+    <section class="breathing-card" aria-labelledby="breathing-title">
+      <div class="breathing-copy"><p class="eyebrow"><span class="eyebrow-line"></span> A MOMENT FOR YOU</p><h2 id="breathing-title">Breathe with the circle</h2><p>Follow the gentle pace for a few rounds. You can stop whenever you like.</p><button class="breathing-button" id="breathing-toggle" type="button">Begin breathing</button></div>
+      <div class="breathing-visual" id="breathing-visual" aria-hidden="true"><span class="breathing-orbit"></span><span class="breathing-orbit breathing-orbit--two"></span><span class="breathing-circle" id="breathing-circle"><span id="breathing-cue">Ready</span></span></div>
+    </section>
+    <section class="break-ideas" aria-labelledby="break-title">
+      <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> SMALL WAYS TO PAUSE</p><h2 id="break-title">Pick a gentle reset</h2></div><span class="section-count">A FEW IDEAS</span></div>
+      <div class="break-grid">
+        <article class="break-card"><span class="break-icon" aria-hidden="true">↗</span><span class="break-kicker">MOVE A LITTLE</span><h3>Stretch and look away</h3><p>Stand up, roll your shoulders, and rest your eyes on something in the distance.</p></article>
+        <article class="break-card"><span class="break-icon break-icon--lavender" aria-hidden="true">♫</span><span class="break-kicker">CHANGE THE PACE</span><h3>Listen to one song</h3><p>Choose something you enjoy and let your attention drift away from your task for a moment.</p></article>
+        <article class="break-card"><span class="break-icon break-icon--gold" aria-hidden="true">☼</span><span class="break-kicker">GET SOME AIR</span><h3>Take a short walk</h3><p>If you can, get outside for a few minutes and notice what is around you.</p></article>
+      </div>
+      <p class="downtime-note">There’s no timer here. Take the time you need.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><span>STUDY HUB / DOWNTIME CENTRE</span><span>Rest, then return when you’re ready.</span></footer>
+  <script>
+    (() => {
+      const button = document.querySelector('#breathing-toggle');
+      const cue = document.querySelector('#breathing-cue');
+      const circle = document.querySelector('#breathing-circle');
+      const visual = document.querySelector('#breathing-visual');
+      let interval = null;
+      let phase = 0;
+      const cues = ['Breathe in', 'Breathe out'];
+      button.addEventListener('click', () => {
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+          circle.classList.remove('is-breathing');
+          visual.classList.remove('is-active');
+          cue.textContent = 'Ready';
+          button.textContent = 'Begin breathing';
+          return;
+        }
+        phase = 0;
+        circle.classList.add('is-breathing');
+        visual.classList.add('is-active');
+        cue.textContent = cues[phase];
+        button.textContent = 'End exercise';
+        interval = setInterval(() => { phase = 1 - phase; cue.textContent = cues[phase]; }, 4000);
+      });
+    })();
+  </script>
+</body>
+</html>

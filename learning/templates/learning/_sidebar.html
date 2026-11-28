@@ -1,0 +1,17 @@
+<aside class="study-sidebar" aria-label="Study Hub navigation">
+  <a class="sidebar-brand" href="{% url 'home' %}"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+  <p class="sidebar-label">YOUR STUDY SPACE</p>
+  <nav class="sidebar-nav" aria-label="Main navigation">
+    <a class="sidebar-link {% if request.resolver_match.url_name == 'home' %}is-active{% endif %}" href="{% url 'home' %}"><span>⌂</span> Overview</a>
+    <span class="sidebar-label sidebar-label--section">SUBJECTS</span>
+    <a class="sidebar-link sidebar-link--science {% if request.resolver_match.url_name == 'science' or request.resolver_match.url_name == 'solar_system' %}is-active{% endif %}" href="{% url 'science' %}"><span>✳</span> Science</a>
+    <a class="sidebar-link sidebar-link--maths {% if request.resolver_match.url_name == 'maths' %}is-active{% endif %}" href="{% url 'maths' %}"><span>∑</span> Maths</a>
+    <a class="sidebar-link sidebar-link--english {% if request.resolver_match.url_name == 'english' %}is-active{% endif %}" href="{% url 'english' %}"><span>Aa</span> English</a>
+    <a class="sidebar-link sidebar-link--django {% if request.resolver_match.url_name == 'django' %}is-active{% endif %}" href="{% url 'django' %}"><span>Py</span> Django</a>
+    <a class="sidebar-link sidebar-link--coding {% if request.resolver_match.url_name == 'coding' %}is-active{% endif %}" href="{% url 'coding' %}"><span>&lt;/&gt;</span> Coding</a>
+    <span class="sidebar-label sidebar-label--section">MORE</span>
+    <a class="sidebar-link {% if request.resolver_match.url_name == 'learning_library' or request.resolver_match.url_name == 'year_dashboard' or request.resolver_match.url_name == 'year_subject' %}is-active{% endif %}" href="{% url 'learning_library' %}"><span>▦</span> Year 1–12 library</a>
+    <a class="sidebar-link sidebar-link--downtime {% if request.resolver_match.url_name == 'downtime' %}is-active{% endif %}" href="{% url 'downtime' %}"><span>☾</span> Downtime Centre</a>
+  </nav>
+  <div class="sidebar-bottom"><span class="status-dot"></span><span>LEARN AT YOUR OWN PACE</span></div>
+</aside>

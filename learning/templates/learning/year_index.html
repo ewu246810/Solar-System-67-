@@ -11,8 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'learning/style.css' %}">
 </head>
-<body>
+<body class="has-sidebar">
   <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
   <header class="site-header">
     <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
     <a class="header-library-link" href="{% url 'home' %}">BACK TO HOME <span aria-hidden="true">↗</span></a>

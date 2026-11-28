@@ -12,8 +12,9 @@
   <link rel="stylesheet" href="{% static 'learning/style.css' %}">
   <script src="{% static 'learning/quiz.js' %}" defer></script>
 </head>
-<body class="resource-page resource-page--{{ subject.tone }}">
+<body class="has-sidebar resource-page resource-page--{{ subject.tone }}">
   <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
   <header class="site-header">
     <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
     <a class="header-library-link" href="{% url 'learning_library' %}">YEAR 1–12 LIBRARY <span aria-hidden="true">↗</span></a>

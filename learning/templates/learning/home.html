@@ -11,8 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'learning/style.css' %}">
 </head>
-<body>
+<body class="has-sidebar">
   <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
   <header class="site-header">
     <a class="brand" href="/" aria-label="Study Hub home">
       <span class="brand-mark" aria-hidden="true">✳</span>
@@ -56,6 +57,29 @@
       </aside>
     </section>
 
+    <section class="focus-section" aria-labelledby="focus-title">
+      <div class="focus-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> MAKE A LITTLE SPACE</p>
+        <h2 id="focus-title">A focused start.</h2>
+        <p>Choose a short session, pick a subject, and give it your full attention.</p>
+      </div>
+      <div class="focus-timer" aria-label="Study focus timer">
+        <div class="focus-timer-top"><span class="focus-status" id="focus-status">READY WHEN YOU ARE</span><span class="focus-subject">YOUR NEXT STEP</span></div>
+        <div class="focus-clock" id="focus-clock" role="timer" aria-live="off">25:00</div>
+        <div class="focus-controls">
+          <div class="focus-presets" role="group" aria-label="Session length">
+            <button class="focus-preset is-selected" type="button" data-minutes="25" aria-pressed="true">25 MIN</button>
+            <button class="focus-preset" type="button" data-minutes="50" aria-pressed="false">50 MIN</button>
+          </div>
+          <div class="focus-actions">
+            <button id="focus-toggle" class="focus-start" type="button">Start session</button>
+            <button id="focus-reset" class="focus-reset" type="button" aria-label="Reset timer">↺</button>
+          </div>
+        </div>
+        <p class="focus-message" id="focus-message" aria-live="polite">No pressure. One small step is enough.</p>
+      </div>
+    </section>
+
     <section class="subjects-section" aria-labelledby="subjects-title">
       <div class="section-heading">
         <div>
@@ -90,5 +114,76 @@
   </main>
 
   <footer class="site-footer"><span>STUDY HUB</span><span>Keep asking questions.</span></footer>
+  <script>
+    (() => {
+      const clock = document.querySelector('#focus-clock');
+      const status = document.querySelector('#focus-status');
+      const message = document.querySelector('#focus-message');
+      const toggle = document.querySelector('#focus-toggle');
+      const reset = document.querySelector('#focus-reset');
+      const presets = [...document.querySelectorAll('.focus-preset')];
+      let duration = 25 * 60;
+      let remaining = duration;
+      let endAt = null;
+      let interval = null;
+
+      const render = () => {
+        const minutes = Math.floor(remaining / 60).toString().padStart(2, '0');
+        const seconds = (remaining % 60).toString().padStart(2, '0');
+        clock.textContent = `${minutes}:${seconds}`;
+      };
+      const stop = () => { clearInterval(interval); interval = null; endAt = null; };
+      const tick = () => {
+        remaining = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
+        render();
+        if (remaining === 0) {
+          stop();
+          status.textContent = 'SESSION COMPLETE';
+          toggle.textContent = 'Start again';
+          message.textContent = 'Nice work. Take a short break or begin another session.';
+        }
+      };
+      toggle.addEventListener('click', () => {
+        if (interval) {
+          remaining = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
+          stop();
+          status.textContent = 'SESSION PAUSED';
+          toggle.textContent = 'Resume session';
+          message.textContent = 'Your time is saved. Pick it back up when you’re ready.';
+          render();
+          return;
+        }
+        if (!remaining) remaining = duration;
+        endAt = Date.now() + remaining * 1000;
+        interval = setInterval(tick, 250);
+        status.textContent = 'FOCUS IN PROGRESS';
+        toggle.textContent = 'Pause session';
+        message.textContent = 'Stay with one thing at a time. You’ve got this.';
+        tick();
+      });
+      reset.addEventListener('click', () => {
+        stop();
+        remaining = duration;
+        status.textContent = 'READY WHEN YOU ARE';
+        toggle.textContent = 'Start session';
+        message.textContent = 'No pressure. One small step is enough.';
+        render();
+      });
+      presets.forEach((button) => button.addEventListener('click', () => {
+        stop();
+        duration = Number(button.dataset.minutes) * 60;
+        remaining = duration;
+        presets.forEach((preset) => {
+          const selected = preset === button;
+          preset.classList.toggle('is-selected', selected);
+          preset.setAttribute('aria-pressed', String(selected));
+        });
+        status.textContent = 'READY WHEN YOU ARE';
+        toggle.textContent = 'Start session';
+        message.textContent = 'No pressure. One small step is enough.';
+        render();
+      }));
+    })();
+  </script>
 </body>
 </html>
