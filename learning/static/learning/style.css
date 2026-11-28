@@ -189,6 +189,75 @@ a.subject-card--english:hover { border-color: rgba(198, 169, 255, .4); }
 .break-card p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.65; }
 .downtime-note { margin: 17px 0 0; color: #8291a1; text-align: center; font-size: 9px; }
 
+/* Saved learner progress, coins, and pet collection */
+.progress-signin-note { margin: -9px 0 22px; color: #91a1b2; font-size: 10px; }
+.progress-signin-note a { color: var(--mint); text-decoration: none; }
+.course-progress-card { display: grid; grid-template-columns: 1fr minmax(140px, .55fr) auto; align-items: center; gap: 18px; margin: -9px 0 22px; padding: 14px 17px; border: 1px solid rgba(137,219,196,.17); border-radius: 11px; background: rgba(17,30,46,.62); }
+.course-progress-copy { display: grid; gap: 5px; }
+.progress-kicker { color: #8293a5; font: 7px 'DM Mono', monospace; letter-spacing: .12em; }
+.course-progress-copy strong { color: #e9f1f4; font: 600 18px 'Manrope', sans-serif; }
+.course-progress-copy strong span { color: #8697a8; font-size: 9px; font-weight: 500; }
+.course-progress-card > a { color: var(--mint); font-size: 8px; text-decoration: none; white-space: nowrap; }
+.progress-track { height: 6px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.08); }
+.progress-track > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #75cdb5, #b0ead8); box-shadow: 0 0 12px rgba(137,219,196,.25); transition: width .4s ease; }
+.year-subject-bottom { flex-wrap: wrap; }
+.year-subject-bottom .year-card-arrow { flex: none; }
+.lesson-best-score { margin: 16px 0 0 !important; color: #c8b276 !important; font: 8px 'DM Mono', monospace !important; letter-spacing: .05em; }
+.progress-main { width: min(980px, calc(100% - 56px)); margin: 0 auto; padding-top: 48px; }
+.progress-intro { max-width: 640px; margin-bottom: 27px; }
+.progress-intro h1 { margin-bottom: 13px; font-size: clamp(43px, 6vw, 68px); }
+.progress-intro h1 span { color: #8296aa; }
+.progress-intro > p:last-child { max-width: 530px; margin: 0; color: #aab6c4; font-size: 12px; line-height: 1.8; }
+.progress-messages { display: grid; gap: 7px; margin-bottom: 17px; }
+.progress-message { margin: 0; padding: 10px 13px; border: 1px solid rgba(137,219,196,.18); border-radius: 8px; color: #cce9df; background: rgba(137,219,196,.06); font-size: 10px; }
+.progress-message--error { border-color: rgba(239,151,142,.24); color: #f1b9b2; background: rgba(239,151,142,.06); }
+.progress-overview { display: grid; grid-template-columns: 150px 1fr 145px; align-items: center; gap: 26px; padding: 19px 21px; border: 1px solid rgba(137,219,196,.19); border-radius: 14px; background: linear-gradient(110deg, rgba(20,39,52,.86), rgba(12,25,39,.78)); }
+.progress-stat { display: grid; gap: 4px; }
+.progress-stat > strong { color: #f1f4f2; font: 600 27px 'DM Mono', monospace; }
+.progress-stat > strong small, .progress-year-card > strong small { color: #8092a4; font-size: 12px; font-weight: 400; }
+.progress-stat-foot { color: #7e90a2; font-size: 8px; }
+.progress-overview-bar { display: grid; gap: 10px; }
+.progress-overview-top { display: flex; align-items: center; justify-content: space-between; color: #8294a5; font: 7px 'DM Mono', monospace; letter-spacing: .1em; }
+.progress-overview-top strong { color: var(--mint); font-size: 10px; }
+.coin-balance { display: flex; align-items: center; gap: 10px; padding-left: 19px; border-left: 1px solid var(--line); }
+.coin-symbol { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(242,196,121,.28); border-radius: 50%; color: #f2c479; background: rgba(242,196,121,.08); }
+.coin-balance > div { display: grid; gap: 3px; }
+.coin-balance strong { color: #f2d493; font: 600 18px 'DM Mono', monospace; }
+.progress-years, .pet-section { margin-top: 36px; }
+.progress-years .section-heading, .pet-section .section-heading { margin-bottom: 14px; }
+.progress-years .section-heading .eyebrow, .pet-section .section-heading .eyebrow { margin-bottom: 8px; }
+.progress-years .section-heading h2, .pet-section .section-heading h2 { font-size: 21px; }
+.progress-year-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 9px; }
+.progress-year-card { display: grid; gap: 10px; min-height: 108px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--panel); text-decoration: none; transition: border-color .2s, transform .2s; }
+.progress-year-card:hover { transform: translateY(-2px); border-color: rgba(137,219,196,.34); }
+.progress-year-card > strong { color: #eff4f2; font: 600 20px 'DM Mono', monospace; }
+.progress-year-card > .progress-track { height: 4px; }
+.progress-year-label { display: flex; justify-content: space-between; color: #8696a5; font-size: 8px; }
+.progress-year-label span { color: var(--mint); }
+.pet-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.pet-card { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 13px 15px; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); }
+.pet-art { display: grid; width: 46px; height: 46px; flex: none; place-items: center; border: 1px solid rgba(198,169,255,.18); border-radius: 12px; background: rgba(198,169,255,.06); font-size: 25px; }
+.pet-card--egg .pet-art { border-color: rgba(242,196,121,.2); background: rgba(242,196,121,.06); }
+.pet-card > div { min-width: 0; flex: 1; }
+.pet-card h3 { margin: 3px 0 2px; font-size: 12px; }
+.pet-card p { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.5; }
+.hatch-button { min-height: 30px; padding: 0 9px; border: 1px solid rgba(242,196,121,.35); border-radius: 999px; color: #f2d493; background: rgba(242,196,121,.06); font-size: 8px; cursor: pointer; }
+.hatch-button:hover { background: rgba(242,196,121,.13); }
+.pet-empty { display: flex; align-items: center; gap: 11px; padding: 15px; border: 1px dashed rgba(174,195,218,.2); border-radius: 11px; color: #91a1b0; }
+.pet-empty > span { color: #c6a9ff; font-size: 21px; }
+.pet-empty p { margin: 0; font-size: 9px; }
+.egg-shop { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 13px; margin-top: 12px; padding: 15px; border: 1px solid rgba(242,196,121,.18); border-radius: 12px; background: linear-gradient(105deg, rgba(46,38,29,.36), rgba(17,28,41,.7)); }
+.egg-shop-art { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(242,196,121,.24); border-radius: 12px; background: rgba(242,196,121,.07); font-size: 23px; }
+.egg-shop-copy h3 { margin: 4px 0; font-size: 12px; }
+.egg-shop-copy p { max-width: 430px; margin: 0; color: var(--muted); font-size: 8px; line-height: 1.55; }
+.egg-shop-action { display: grid; justify-items: end; gap: 7px; }
+.egg-shop-action > span { color: #e6c783; font: 7px 'DM Mono', monospace; letter-spacing: .1em; }
+.egg-shop-action button { min-height: 31px; padding: 0 12px; border: 0; border-radius: 999px; color: #292216; background: #e7c77f; font-size: 8px; font-weight: 800; cursor: pointer; }
+.egg-shop-action button:hover { background: #f3d99a; }
+.egg-shop-action button:disabled { color: #77818b; background: #283440; cursor: not-allowed; }
+.quiz-actions button:disabled { opacity: .65; cursor: wait; }
+.quiz-result { white-space: pre-wrap; }
+
 /* Dot AI study chat */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
 .sidebar-link--dot:hover > span, .sidebar-link--dot.is-active > span { color: #f2c479; }
@@ -425,6 +494,7 @@ a.subject-card--django:hover { border-color: rgba(155, 223, 170, .4); }
 .auth-form .helptext { display: block; margin-top: 7px; color: #8493a4; font-size: 9px; line-height: 1.65; }
 .auth-form .helptext ul { margin: 5px 0 0; padding-left: 17px; }
 .auth-form .errorlist { margin: 0 0 7px; padding-left: 17px; color: #f0a7a2; font-size: 10px; line-height: 1.6; }
+.form-error { margin: 0 0 12px; color: #f0a7a2; font-size: 10px; }
 .auth-submit { display: flex; align-items: center; justify-content: space-between; min-height: 44px; margin-top: 6px; padding: 0 16px; border: 1px solid rgba(137, 219, 196, .48); border-radius: 999px; color: #071b20; background: var(--mint); font: 700 11px 'Manrope', sans-serif; cursor: pointer; transition: transform .2s, filter .2s; }
 .auth-submit:hover { transform: translateY(-1px); filter: brightness(1.06); }
 .auth-submit span { font-size: 16px; }
@@ -649,4 +719,17 @@ a.subject-card--django:hover { border-color: rgba(155, 223, 170, .4); }
   .dot-suggestion { font-size: 7px; }
   .dot-compose { margin: 0 10px; padding-left: 10px; }
   .dot-disclaimer { margin-inline: 12px; }
+  .progress-main { width: min(calc(100% - 38px), 560px); padding-top: 28px; }
+  .course-progress-card { grid-template-columns: 1fr auto; gap: 10px; padding: 12px; }
+  .course-progress-card > .progress-track { grid-column: 1 / -1; grid-row: 2; }
+  .course-progress-card > a { grid-column: 1 / -1; }
+  .progress-overview { grid-template-columns: 1fr auto; gap: 17px; padding: 15px; }
+  .progress-overview-bar { grid-column: 1 / -1; grid-row: 2; }
+  .coin-balance { padding-left: 12px; }
+  .progress-year-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .progress-year-card { min-height: 100px; padding: 11px; }
+  .pet-grid { grid-template-columns: 1fr; }
+  .egg-shop { grid-template-columns: 38px 1fr; gap: 10px; padding: 12px; }
+  .egg-shop-art { width: 36px; height: 36px; }
+  .egg-shop-action { grid-column: 1 / -1; grid-row: 2; display: flex; justify-content: space-between; align-items: center; }
 }

@@ -11,27 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'learning/style.css' %}">
 </head>
-<body class="resource-page auth-page">
+<body class="has-sidebar resource-page auth-page">
   <div class="page-glow" aria-hidden="true"></div>
-  <header class="site-header">
-    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
-    <a class="header-library-link" href="{% url 'home' %}">BACK TO STUDY HUB <span aria-hidden="true">↗</span></a>
-  </header>
-  <main class="auth-main">
-    <section class="auth-card" aria-labelledby="login-title">
-      <div class="resource-subject-icon auth-icon" aria-hidden="true">↗</div>
-      <p class="eyebrow"><span class="eyebrow-line"></span> YOUR LEARNING SPACE</p>
-      <h1 id="login-title">Welcome<br><span>back.</span></h1>
-      <p class="auth-intro">Log in to your Study Hub student account.</p>
-      <form method="post" class="auth-form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="hidden" name="next" value="{{ next }}">
-        <button type="submit" class="auth-submit">Log in <span aria-hidden="true">→</span></button>
-      </form>
-      <p class="auth-switch">New to Study Hub? <a href="{% url 'signup' %}">Create an account</a></p>
-    </section>
-  </main>
-  <footer class="site-footer"><span>STUDY HUB / STUDENT ACCOUNT</span><span>Good to have you here.</span></footer>
+  {% include 'learning/_sidebar.html' %}
+  <header class="site-header"><a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a><a class="header-library-link" href="{% url 'signup' %}">CREATE ACCOUNT <span aria-hidden="true">↗</span></a></header>
+  <main class="auth-main"><section class="auth-card" aria-labelledby="login-title"><div class="resource-subject-icon auth-icon" aria-hidden="true">✦</div><p class="eyebrow"><span class="eyebrow-line"></span> WELCOME BACK</p><h1 id="login-title">Pick up where<br><span>you left off.</span></h1><p class="auth-intro">Log in to see your saved lessons, coins, and pets.</p>
+    {% if form.errors %}<p class="form-error" role="alert">That username and password didn’t match. Try again.</p>{% endif %}
+    <form method="post" class="auth-form">{% csrf_token %}<input type="hidden" name="next" value="{{ next }}"><p><label for="id_username">Username</label>{{ form.username }}</p><p><label for="id_password">Password</label>{{ form.password }}</p><button type="submit" class="auth-submit">Log in <span aria-hidden="true">→</span></button></form>
+    <p class="auth-switch">New to Study Hub? <a href="{% url 'signup' %}">Create an account</a></p>
+  </section></main>
+  <footer class="site-footer"><span>STUDY HUB / ACCOUNT</span><span>Ready when you are.</span></footer>
 </body>
 </html>

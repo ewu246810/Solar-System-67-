@@ -12,6 +12,7 @@
     <a class="sidebar-link sidebar-link--coding {% if request.resolver_match.url_name == 'coding' %}is-active{% endif %}" href="{% url 'coding' %}"><span>&lt;/&gt;</span> Coding</a>
     <span class="sidebar-label sidebar-label--section">MORE</span>
     <a class="sidebar-link {% if request.resolver_match.url_name == 'learning_library' or request.resolver_match.url_name == 'year_dashboard' or request.resolver_match.url_name == 'year_subject' %}is-active{% endif %}" href="{% url 'learning_library' %}"><span>▦</span> Year 1–12 library</a>
+    {% if user.is_authenticated %}<a class="sidebar-link {% if request.resolver_match.url_name == 'progress' %}is-active{% endif %}" href="{% url 'progress' %}"><span>◉</span> My progress & pets</a>{% endif %}
     <a class="sidebar-link sidebar-link--downtime {% if request.resolver_match.url_name == 'downtime' %}is-active{% endif %}" href="{% url 'downtime' %}"><span>☾</span> Downtime Centre</a>
   </nav>
   <div class="sidebar-bottom"><span class="status-dot"></span><span>LEARN AT YOUR OWN PACE</span></div>

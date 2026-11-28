@@ -32,6 +32,7 @@
       <p class="eyebrow"><span class="eyebrow-line"></span> {{ band|upper }} · YEAR {{ year }} {{ subject.name|upper }}</p>
       <h1>{{ resource.topic }}</h1>
       <p>Take a few minutes to read, review the notes, and try the mini test. You can check your answers straight away.</p>
+      {% if user.is_authenticated and progress %}<p class="lesson-best-score">Best score: {{ progress.best_score }} / {{ progress.question_count }} · {{ progress.coins_awarded }} coins earned</p>{% elif user.is_authenticated %}<p class="lesson-best-score">Complete the quiz to save your progress and earn up to 100 coins.</p>{% else %}<p class="lesson-best-score"><a href="{% url 'login' %}?next={{ request.path|urlencode }}">Log in</a> to save your quiz results and earn coins.</p>{% endif %}
     </section>
 
     <nav class="resource-jump" aria-label="On this page">
@@ -54,9 +55,10 @@
 
     <section class="resource-section quiz-section" id="mini-test" aria-labelledby="quiz-title">
       <div class="resource-section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> HAVE A GO</p><h2 id="quiz-title">Mini test</h2><p>Choose one answer for each question, then check your score.</p></div>
-      <form class="quiz-form" novalidate>
+      <form class="quiz-form" data-quiz-id="{{ quiz_id }}" data-submit-url="{% url 'submit_quiz' %}" novalidate>
+        {% csrf_token %}
         {% for question in resource.questions %}
-          <fieldset class="quiz-question" data-answer="{{ question.answer }}" data-explanation="{{ question.explanation }}">
+          <fieldset class="quiz-question">
             <legend><span class="quiz-question-number">QUESTION {{ forloop.counter|stringformat:"02d" }}</span>{{ question.prompt }}</legend>
             <div class="quiz-options">
               {% for option in question.options %}
@@ -66,7 +68,7 @@
             <p class="question-feedback" aria-live="polite"></p>
           </fieldset>
         {% endfor %}
-        <div class="quiz-actions"><button class="quiz-submit" type="submit">Check my answers <span aria-hidden="true">↗</span></button><button class="quiz-reset" type="reset">Try again</button></div>
+        <div class="quiz-actions"><button class="quiz-submit" type="submit">Submit quiz <span aria-hidden="true">↗</span></button><button class="quiz-reset" id="quiz-retry" type="button" hidden>Try a new quiz</button></div>
         <p class="quiz-result" aria-live="polite" hidden></p>
       </form>
     </section>

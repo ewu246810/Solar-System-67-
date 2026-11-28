@@ -1,0 +1,61 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08121f">
+  <title>My progress and pets — Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'learning/style.css' %}">
+</head>
+<body class="has-sidebar progress-page">
+  <div class="page-glow" aria-hidden="true"></div>
+  {% include 'learning/_sidebar.html' %}
+  <header class="site-header">
+    <a class="brand" href="{% url 'home' %}" aria-label="Study Hub home"><span class="brand-mark" aria-hidden="true">✳</span><span>Study<span class="brand-light">Hub</span></span></a>
+    <a class="header-library-link" href="{% url 'learning_library' %}">KEEP LEARNING <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="progress-main">
+    <section class="progress-intro">
+      <p class="eyebrow"><span class="eyebrow-line"></span> YOUR LEARNING JOURNEY</p>
+      <h1>Look how far<br><span>you’ve come.</span></h1>
+      <p>Your quiz results are saved to your account. Keep practising to grow your progress and earn coins.</p>
+    </section>
+
+    {% if messages %}<div class="progress-messages" aria-live="polite">{% for message in messages %}<p class="progress-message progress-message--{{ message.tags }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+
+    <section class="progress-overview" aria-label="Overall study progress">
+      <div class="progress-stat"><span class="progress-kicker">LESSONS COMPLETED</span><strong>{{ completed_units }} <small>/ {{ total_units }}</small></strong><span class="progress-stat-foot">across Years 1–12</span></div>
+      <div class="progress-overview-bar"><div class="progress-overview-top"><span>ALL YEAR LEVELS</span><strong>{{ overall_percent }}%</strong></div><div class="progress-track" role="progressbar" aria-label="Overall course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ overall_percent }}"><span style="width: {{ overall_percent }}%"></span></div></div>
+      <div class="coin-balance"><span class="coin-symbol" aria-hidden="true">✦</span><div><span class="progress-kicker">YOUR COINS</span><strong>{{ profile.coins }}</strong></div></div>
+    </section>
+
+    <section class="progress-years" aria-labelledby="year-progress-title">
+      <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> EVERY STEP COUNTS</p><h2 id="year-progress-title">Year-by-year progress</h2></div><span class="section-count">12 YEARS</span></div>
+      <div class="progress-year-grid">
+        {% for item in year_summaries %}
+          <a class="progress-year-card" href="{{ item.url }}"><span class="progress-kicker">YEAR {{ item.year|stringformat:"02d" }}</span><strong>{{ item.completed }} <small>/ {{ item.total }}</small></strong><div class="progress-track" role="progressbar" aria-label="Year {{ item.year }} progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ item.percent }}"><span style="width: {{ item.percent }}%"></span></div><span class="progress-year-label">{{ item.percent }}% complete <span aria-hidden="true">↗</span></span></a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="pet-section" aria-labelledby="pets-title">
+      <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> YOUR LITTLE COMPANIONS</p><h2 id="pets-title">Pet collection</h2></div><span class="section-count">{{ pets|length }} IN YOUR COLLECTION</span></div>
+      {% if pets %}
+        <div class="pet-grid">
+          {% for pet in pets %}
+            <article class="pet-card {% if pet.is_egg %}pet-card--egg{% endif %}"><span class="pet-art" aria-hidden="true">{% if pet.is_egg %}🥚{% elif pet.species == 'comet_fox' %}🦊{% elif pet.species == 'moon_cat' %}🐈{% elif pet.species == 'cloud_bunny' %}🐇{% elif pet.species == 'star_owl' %}🦉{% elif pet.species == 'nebula_axolotl' %}🦎{% else %}🐢{% endif %}</span><div><span class="progress-kicker">{% if pet.is_egg %}READY TO HATCH{% else %}YOUR PET{% endif %}</span><h3>{% if pet.is_egg %}Mysterious egg{% else %}{{ pet.name|default:pet.label }}{% endif %}</h3><p>{% if pet.is_egg %}A surprise friend is waiting inside.{% else %}{{ pet.label }} · hatched {{ pet.hatched_at|date:"M j, Y" }}{% endif %}</p></div>{% if pet.is_egg %}<form method="post" action="{% url 'hatch_egg' pet.id %}">{% csrf_token %}<button class="hatch-button" type="submit">Hatch egg</button></form>{% endif %}</article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="pet-empty"><span aria-hidden="true">✧</span><p>Your collection is waiting for its first egg. Finish quizzes to earn coins.</p></div>
+      {% endif %}
+      <div class="egg-shop"><div class="egg-shop-art" aria-hidden="true">🥚</div><div class="egg-shop-copy"><span class="progress-kicker">THE LITTLE STAR SHOP</span><h3>A surprise pet egg</h3><p>Spend 100 coins to add a mystery egg to your collection. Hatch it whenever you’re ready.</p></div><div class="egg-shop-action"><span>✦ {{ egg_cost }} COINS</span><form method="post" action="{% url 'buy_egg' %}">{% csrf_token %}<button type="submit" {% if profile.coins < egg_cost %}disabled{% endif %}>Buy an egg</button></form></div></div>
+    </section>
+  </main>
+  <footer class="site-footer"><span>STUDY HUB / MY PROGRESS</span><span>Small steps add up.</span></footer>
+</body>
+</html>

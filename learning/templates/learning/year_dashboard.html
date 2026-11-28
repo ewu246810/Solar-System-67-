@@ -26,13 +26,22 @@
       <h1>Year {{ year }}<br><span>pick a subject.</span></h1>
       <p>Each subject has a short article, key notes, and a three-question quiz drawn from a larger question bank.</p>
     </section>
+    {% if user.is_authenticated %}
+      <section class="course-progress-card" aria-label="Year {{ year }} progress">
+        <div class="course-progress-copy"><span class="progress-kicker">YOUR YEAR {{ year }} PROGRESS</span><strong>{{ completed_count }} <span>/ {{ subject_count }} lessons completed</span></strong></div>
+        <div class="progress-track" role="progressbar" aria-label="Year {{ year }} lesson progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ year_percent }}"><span style="width: {{ year_percent }}%"></span></div>
+        <a href="{% url 'progress' %}">See all progress & pets →</a>
+      </section>
+    {% else %}
+      <p class="progress-signin-note"><a href="{% url 'login' %}?next={{ request.path|urlencode }}">Log in</a> to save quiz results and earn coins.</p>
+    {% endif %}
     <div class="year-subject-grid">
       {% for subject in subjects %}
         <a class="year-subject-card year-subject-card--{{ subject.tone }}" href="{{ subject.url }}">
           <span class="year-subject-top"><span>{{ subject.icon }}</span><span>YEAR {{ year }} / {{ forloop.counter|stringformat:"02d" }}</span></span>
           <span class="year-subject-name">{{ subject.name }}</span>
           <span class="year-subject-topic">{{ subject.topic }}</span>
-          <span class="year-subject-bottom">NOTES <span>·</span> ARTICLE <span>·</span> MINI TEST <span class="year-card-arrow" aria-hidden="true">↗</span></span>
+          <span class="year-subject-bottom">{% if subject.progress %}BEST {{ subject.progress.best_score }}/{{ subject.progress.question_count }} <span>·</span> {{ subject.progress.coins_awarded }} COINS EARNED{% else %}NOTES <span>·</span> ARTICLE <span>·</span> MINI TEST{% endif %} <span class="year-card-arrow" aria-hidden="true">↗</span></span>
         </a>
       {% endfor %}
     </div>
